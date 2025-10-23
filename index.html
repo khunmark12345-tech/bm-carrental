@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BM Carrental Chiangrai - บริการเช่ารถยนต์</title>
+    <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            padding: 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .logo span {
+            color: #ff6b00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #1a73e8;
+        }
+        
+        .auth-buttons {
+            display: flex;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid #1a73e8;
+            color: #1a73e8;
+            margin-right: 10px;
+        }
+        
+        .btn-register {
+            background-color: #1a73e8;
+            border: 1px solid #1a73e8;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #fff0f0;
+        }
+        
+        .btn-register:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Search Container */
+        .search-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Rental Type Tabs */
+        .rental-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 3px;
+            border: 1px solid #e9ecef;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 8px 16px;
+            background-color: transparent;
+            border: none;
+            color: #666;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .tab-btn.active {
+            background-color: #1a73e8;
+            color: white;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.2);
+        }
+        
+        .tab-btn:not(.active) {
+            color: #666;
+        }
+        
+        .tab-btn:not(.active):hover {
+            color: #1a73e8;
+            background-color: #f0f7ff;
+        }
+        
+        .search-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 15px;
+        }
+        
+        .search-field {
+            flex: 1 1 200px;
+            text-align: left;
+        }
+        
+        .search-field label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            z-index: 2;
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .search-field input {
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-field input:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        /* removed custom .cdrop styles per request to keep native select */
+
+        /* Dropdown option effects (browser-limited) */
+        #pickup-location option {
+            color: #0f172a; /* slate-900 for readability */
+            background: #ffffff;
+            font-weight: 700; /* stronger text */
+            font-size: 15px;
+            letter-spacing: 0.2px;
+        }
+
+        /* Hover each option in the dropdown */
+        #pickup-location option:hover {
+            background-color: #eef4ff; /* soft blue */
+            color: #0e5fd6;
+        }
+
+        /* Active/selected item highlight when menu is open */
+        #pickup-location option:checked {
+            background-color: #dbeafe; /* slightly stronger than hover */
+            color: #0b5bd6;
+        }
+
+        /* Improve readability on Windows high-contrast modes */
+        @media (forced-colors: active) {
+            #pickup-location option:hover {
+                outline: 1px solid Highlight;
+            }
+        }
+        
+        .clear-btn {
+            position: absolute;
+            right: 12px;
+            cursor: pointer;
+            color: #999;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .clear-btn:hover {
+            color: #666;
+        }
+        
+        .date-separator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+        }
+        
+        .separator-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a73e8;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .btn-search {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+            white-space: nowrap;
+            height: 44px;
+        }
+        
+        .btn-search:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* DateTime Picker Modal */
+        .datetime-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .datetime-modal.show {
+            opacity: 1;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            width: 95%;
+            max-width: 380px;
+            max-height: 85vh;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .datetime-modal.show .modal-content {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px 8px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px 16px 0 0;
+            color: white;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .close-btn {
+            font-size: 16px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .close-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg) scale(1.1);
+        }
+        
+        .modal-body {
+            padding: 12px 16px;
+        }
+        
+        /* Calendar Tabs */
+        .calendar-tabs {
+            display: flex;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            padding: 2px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-tab-btn {
+            flex: 1;
+            padding: 6px 8px;
+            background: transparent;
+            border: none;
+            color: #333;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 11px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .calendar-tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+        
+        .calendar-tab-btn.active {
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .calendar-tab-btn.active::before {
+            left: 0;
+        }
+        
+        .calendar-tab-btn span {
+            position: relative;
+            z-index: 2;
+            font-weight: 800;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .calendar-tab-btn.active span {
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .calendar-tab-btn:not(.active):hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #1a365d;
+            transform: translateY(-1px);
+        }
+        
+        .tab-icon {
+            font-size: 12px;
+        }
+        
+        .calendar-container {
+            margin-bottom: 6px;
+            display: none;
+        }
+        
+        .calendar-container.active {
+            display: block;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        
+        .calendar-header h4 {
+            margin: 0;
+            color: #1a365d;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 6px;
+            padding: 4px 6px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #667eea;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 700;
+            min-width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+        
+        .nav-btn:hover {
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .nav-btn:hover::before {
+            left: 0;
+        }
+        
+        .nav-btn span {
+            position: relative;
+            z-index: 2;
+            font-weight: 800;
+        }
+        
+        .nav-btn:hover span {
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .selected-date-info {
+            margin-top: 6px;
+            padding: 8px 10px;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%);
+            border-radius: 6px;
+            border-left: 2px solid #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .selected-date-info:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .info-label {
+            font-weight: 700;
+            color: #1a365d;
+            margin-right: 4px;
+            font-size: 11px;
+        }
+        
+        #pickup-selected-date,
+        #return-selected-date {
+            color: #1a365d;
+            font-weight: 800;
+            font-size: 11px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            padding: 6px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .day-header {
+            text-align: center;
+            padding: 4px 2px;
+            font-weight: 800;
+            color: #1a365d;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 4px;
+            font-size: 9px;
+            border: 1px solid rgba(26, 54, 93, 0.3);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+        
+        .day-cell {
+            text-align: center;
+            padding: 4px 2px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            font-weight: 700;
+            font-size: 11px;
+            color: #1a365d;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            min-height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .day-cell::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+        
+        .day-cell:hover {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%);
+            border-color: #1a365d;
+            color: #1a365d;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 12px rgba(26, 54, 93, 0.2);
+        }
+        
+        .day-cell.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            font-weight: 800;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px) scale(1.1);
+        }
+        
+        .day-cell.selected::before {
+            opacity: 1;
+        }
+        
+        .day-cell span {
+            position: relative;
+            z-index: 2;
+            font-weight: 700;
+        }
+        
+        .day-cell.selected span {
+            color: white;
+            font-weight: 800;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .day-cell.in-range {
+            background-color: #e3f2fd;
+            color: #1a73e8;
+            border-color: #bbdefb;
+        }
+        
+        .day-cell.other-month {
+            color: #a0aec0;
+            cursor: not-allowed;
+            background-color: #f8f9fa;
+            font-weight: 500;
+        }
+        
+        .day-cell.other-month:hover {
+            background-color: #f8f9fa;
+            border-color: transparent;
+            transform: none;
+            color: #a0aec0;
+        }
+        
+        .day-cell.today {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #744210;
+            border-color: #ffc107;
+            font-weight: 800;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+            position: relative;
+        }
+        
+        .day-cell.today::after {
+            content: 'วันนี้';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+            color: white;
+            font-size: 5px;
+            padding: 1px 3px;
+            border-radius: 4px;
+            font-weight: 700;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .day-cell.today.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            font-weight: 700;
+        }
+        
+        .day-cell.today.selected::after {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .time-picker {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            padding: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .time-section {
+            flex: 1;
+        }
+        
+        .time-section label {
+            display: block;
+            margin-bottom: 4px;
+            color: #1a365d;
+            font-weight: 700;
+            font-size: 11px;
+        }
+        
+        .time-inputs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .time-inputs select {
+            flex: 1;
+            padding: 4px 6px;
+            border: 2px solid rgba(26, 54, 93, 0.3);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: #1a365d;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .time-inputs select:focus {
+            border-color: #1a365d;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+            transform: translateY(-1px);
+            color: #1a365d;
+            font-weight: 800;
+        }
+        
+        .time-inputs select:hover {
+            border-color: #1a365d;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(26, 54, 93, 0.1);
+            color: #1a365d;
+            font-weight: 800;
+        }
+        
+        .time-inputs select option {
+            color: #1a365d;
+            font-weight: 700;
+            background: white;
+        }
+        
+        .time-separator {
+            font-size: 12px;
+            font-weight: 800;
+            color: #1a365d;
+            margin: 0 3px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 0 0 16px 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 6px;
+            width: 14px;
+            height: 14px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+        
+        .checkbox-container label {
+            color: #1a365d;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .checkbox-container label:hover {
+            color: #2d3748;
+        }
+        
+        .btn-confirm {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 11px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-confirm::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+        
+        .btn-confirm:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-confirm:hover::before {
+            left: 0;
+        }
+        
+        .btn-confirm span {
+            position: relative;
+            z-index: 2;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-confirm:hover span {
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Desktop alignment: keep search fields on one line */
+        @media (min-width: 769px) {
+            .hero .search-box {
+                flex-wrap: nowrap;
+                align-items: flex-end;
+                gap: 12px;
+            }
+            .hero .search-field {
+                flex: 1 1 0;
+                margin: 0;
+            }
+            .hero .btn-search {
+                margin: 0;
+                height: 44px;
+                padding: 0 24px;
+                white-space: nowrap;
+            }
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feature-card p {
+            color: #666;
+        }
+        
+        /* Popular Cars Section */
+        .popular-cars {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .car-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .car-image {
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .car-details {
+            padding: 20px;
+        }
+        
+        .car-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .car-title h3 {
+            font-size: 18px;
+        }
+        
+        .car-price {
+            color: #1a73e8;
+            font-weight: bold;
+        }
+        
+        .car-info {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .car-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .car-feature {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-rent {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn-rent:hover {
+            background-color: #0d62d9;
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .step h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .step p {
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #1a73e8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 15px 0;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .search-container {
+                padding: 20px;
+                margin: 0 10px;
+            }
+            
+            .rental-tabs {
+                margin-bottom: 15px;
+                max-width: 90%;
+            }
+            
+            .tab-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .datetime-group {
+                flex-direction: column;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+            
+            .step {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">BM <span>Carrental Chiangrai</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="carrental.html">รถทั้งหมด</a></li>
+                    <li><a href="serve.html">บริการของเรา</a></li>
+                    <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                    <li><a href="contact.html">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-login">เข้าสู่ระบบ</a>
+                <a href="regiter.html" class="btn btn-register">สมัครสมาชิก</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>ค้นหารถเช่าที่เหมาะกับคุณ</h1>
+            <p>บริการเช่ารถยนต์คุณภาพสูง พร้อมบริการที่รวดเร็วและราคาที่เป็นธรรม</p>
+            
+            <div class="search-container">
+                <!-- Rental Type Tabs -->
+                <div class="rental-tabs">
+                    <button class="tab-btn active" data-type="self-drive">เช่ารถขับเอง</button>
+                    <button class="tab-btn" data-type="with-driver">เช่ารถพร้อมคนขับ</button>
+                </div>
+                
+            <div class="search-box">
+                <div class="search-row">
+                    <div class="search-field location-field">
+                        <label for="pickup-location">จุดรับ-คืนรถ</label>
+                        <div class="location-input-wrapper" id="location-picker">
+                            <span class="location-icon"><i class="fa-solid fa-location-dot"></i></span>
+                            <select id="pickup-location" name="pickup-location" aria-label="จุดรับ-คืนรถ">
+                                <option value="สนามบินเชียงราย">สนามบินเชียงราย</option>
+                                <option value="ขนส่งเก่า">ขนส่งเก่า</option>
+                                <option value="ขนส่งใหม่">ขนส่งใหม่</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="search-field datetime-field">
+                        <label for="pickup-datetime">วัน-เวลารับรถ</label>
+                        <div class="date-time-wrapper">
+                            <span class="calendar-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                            <input type="text" id="pickup-datetime" placeholder="13/10/2025 10:00 น." readonly onclick="openDateTimePicker('pickup')">
+                        </div>
+                    </div>
+                    
+                    <div class="date-separator">
+                        <div class="separator-icon"><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                    
+                    <div class="search-field datetime-field">
+                        <label for="return-datetime">วัน-เวลาคืนรถ</label>
+                        <div class="date-time-wrapper">
+                            <span class="calendar-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                            <input type="text" id="return-datetime" placeholder="15/10/2025 10:00 น." readonly onclick="openDateTimePicker('return')">
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-search">ค้นหารถเช่า</button>
+                </div>
+            </div>
+            
+            <!-- DateTime Picker Modal -->
+            <div id="datetime-modal" class="datetime-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>เลือกวันที่และเวลา</h3>
+                        <span class="close-btn" onclick="closeDateTimePicker()"><i class="fa-solid fa-xmark"></i></span>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Calendar Type Tabs -->
+                        <div class="calendar-tabs">
+                            <button class="calendar-tab-btn active" data-type="pickup" onclick="switchCalendar('pickup')">
+                                <span class="tab-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                                วันรับรถ
+                            </button>
+                            <button class="calendar-tab-btn" data-type="return" onclick="switchCalendar('return')">
+                                <span class="tab-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                                วันคืนรถ
+                            </button>
+                        </div>
+                        
+                        <!-- Pickup Calendar -->
+                        <div id="pickup-calendar" class="calendar-container active">
+                            <div class="calendar-header">
+                                <button class="nav-btn" onclick="changeMonth('pickup', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                                <h4 id="pickup-month">ตุลาคม 2025</h4>
+                                <button class="nav-btn" onclick="changeMonth('pickup', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-month">
+                                <div class="calendar-grid" id="pickup-calendar-grid">
+                                    <div class="day-header">อา</div>
+                                    <div class="day-header">จ.</div>
+                                    <div class="day-header">อ.</div>
+                                    <div class="day-header">พ.</div>
+                                    <div class="day-header">พฤ.</div>
+                                    <div class="day-header">ศ.</div>
+                                    <div class="day-header">ส.</div>
+                                </div>
+                            </div>
+                            <div class="selected-date-info">
+                                <span class="info-label">วันที่เลือก:</span>
+                                <span id="pickup-selected-date">13 ตุลาคม 2025</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Return Calendar -->
+                        <div id="return-calendar" class="calendar-container">
+                            <div class="calendar-header">
+                                <button class="nav-btn" onclick="changeMonth('return', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                                <h4 id="return-month">ตุลาคม 2025</h4>
+                                <button class="nav-btn" onclick="changeMonth('return', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-month">
+                                <div class="calendar-grid" id="return-calendar-grid">
+                                    <div class="day-header">อา</div>
+                                    <div class="day-header">จ.</div>
+                                    <div class="day-header">อ.</div>
+                                    <div class="day-header">พ.</div>
+                                    <div class="day-header">พฤ.</div>
+                                    <div class="day-header">ศ.</div>
+                                    <div class="day-header">ส.</div>
+                                </div>
+                            </div>
+                            <div class="selected-date-info">
+                                <span class="info-label">วันที่เลือก:</span>
+                                <span id="return-selected-date">15 ตุลาคม 2025</span>
+                            </div>
+                        </div>
+                        
+                        <div class="time-picker">
+                            <div class="time-section">
+                                <label>เวลารับรถ</label>
+                                <div class="time-inputs">
+                                    <select id="pickup-hour-select">
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10" selected>10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                    </select>
+                                    <span class="time-separator">:</span>
+                                    <select id="pickup-minute-select">
+                                        <option value="00" selected>00</option>
+                                        <option value="05">05</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                        <option value="55">55</option>
+                    </select>
+                </div>
+                        </div>
+                            <div class="time-section">
+                                <label>เวลาคืนรถ</label>
+                                <div class="time-inputs">
+                                    <select id="return-hour-select">
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10" selected>10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                    </select>
+                                    <span class="time-separator">:</span>
+                                    <select id="return-minute-select">
+                                        <option value="00" selected>00</option>
+                                        <option value="05">05</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                        <option value="55">55</option>
+                                    </select>
+                        </div>
+                    </div>
+                </div>
+                        </div>
+                    <div class="modal-footer">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="price-guarantee" checked>
+                            <label for="price-guarantee">การันตีราคาเท่าหน้าร้าน</label>
+                        </div>
+                        <button class="btn-confirm" onclick="confirmDateTime()">ยืนยัน</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>ทำไมต้องเลือกเรา</h2>
+                <p>เรามอบประสบการณ์การเช่ารถที่ดีที่สุดด้วยบริการที่ครบวงจร</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-car-side"></i></div>
+                    <h3>รถคุณภาพสูง</h3>
+                    <p>รถทุกคันผ่านการตรวจสอบอย่างละเอียด พร้อมบริการบำรุงรักษาอย่างสม่ำเสมอ</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                    <h3>ราคาที่เหมาะสม</h3>
+                    <p>เราเสนอราคาที่แข่งขันได้และโปรโมชั่นพิเศษสำหรับลูกค้าทุกท่าน</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-phone"></i></div>
+                    <h3>บริการตลอด 24 ชม.</h3>
+                    <p>ทีมงานพร้อมให้บริการและช่วยเหลือคุณตลอด 24 ชั่วโมง</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <h3>สถานที่ให้บริการหลายแห่ง</h3>
+                    <p>เรามีสาขาให้บริการในหลายพื้นที่เพื่อความสะดวกของคุณ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Cars Section -->
+    <section class="popular-cars">
+        <div class="container">
+            <div class="section-title">
+                <h2>รถยอดนิยม</h2>
+                <p>รถยนต์ที่ได้รับความนิยมสูงสุดจากลูกค้าของเรา</p>
+            </div>
+            <div class="cars-grid">
+                <div class="car-card">
+                    <div class="car-image">ภาพรถ Toyota Yaris</div>
+                    <div class="car-details">
+                        <div class="car-title">
+                            <h3>Toyota Yaris</h3>
+                            <div class="car-price">฿1,200/วัน</div>
+                        </div>
+                        <div class="car-info">รถยนต์นั่งขนาดเล็ก ประหยัดน้ำมัน</div>
+                        <div class="car-features">
+                            <div class="car-feature"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i>ประหยัดน้ำมัน</div>
+                            <div class="car-feature"><i class="fa-solid fa-user-group" style="margin-right:6px;"></i>5 ที่นั่ง</div>
+                            <div class="car-feature"><i class="fa-solid fa-suitcase-rolling" style="margin-right:6px;"></i>2 กระเป๋า</div>
+                        </div>
+                        <a href="Toyota Yaris.html" class="btn-rent">เช่าตอนนี้</a>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-image">ภาพรถ Honda City</div>
+                    <div class="car-details">
+                        <div class="car-title">
+                            <h3>Honda City</h3>
+                            <div class="car-price">฿1,400/วัน</div>
+                        </div>
+                        <div class="car-info">รถยนต์นั่งขนาดกลาง ทรงสปอร์ต</div>
+                        <div class="car-features">
+                            <div class="car-feature"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i>ประหยัดน้ำมัน</div>
+                            <div class="car-feature"><i class="fa-solid fa-user-group" style="margin-right:6px;"></i>5 ที่นั่ง</div>
+                            <div class="car-feature"><i class="fa-solid fa-suitcase-rolling" style="margin-right:6px;"></i>3 กระเป๋า</div>
+                        </div>
+                        <a href="honda-city.html" class="btn-rent">เช่าตอนนี้</a>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-image">ภาพรถ Toyota Fortuner</div>
+                    <div class="car-details">
+                        <div class="car-title">
+                            <h3>Toyota Fortuner</h3>
+                            <div class="car-price">฿2,500/วัน</div>
+                        </div>
+                        <div class="car-info">รถยนต์อเนกประสงค์ 7 ที่นั่ง</div>
+                        <div class="car-features">
+                            <div class="car-feature"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i>น้ำมันปานกลาง</div>
+                            <div class="car-feature"><i class="fa-solid fa-user-group" style="margin-right:6px;"></i>7 ที่นั่ง</div>
+                            <div class="car-feature"><i class="fa-solid fa-suitcase-rolling" style="margin-right:6px;"></i>4 กระเป๋า</div>
+                        </div>
+                        <a href="Toyota Fortuner.html" class="btn-rent">เช่าตอนนี้</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>วิธีการเช่ารถ</h2>
+                <p>เพียง 4 ขั้นตอนง่ายๆ คุณก็ได้รถเช่าที่ต้องการ</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>เลือกรถและวันที่</h3>
+                    <p>เลือกรถและวันที่ต้องการเช่าจากระบบของเรา</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>ยืนยันการจอง</h3>
+                    <p>กรอกข้อมูลและยืนยันการจองรถ</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>ชำระเงิน</h3>
+                    <p>ชำระเงินผ่านช่องทางที่คุณสะดวก</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>รับรถ</h3>
+                    <p>มารับรถที่สาขาในวันที่นัดหมาย</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>BM Carrental Chiangrai</h3>
+                    <p>บริการเช่ารถยนต์คุณภาพสูง พร้อมบริการที่รวดเร็วและราคาที่เป็นธรรม</p>
+                    <div class="social-links">
+                        <a href="#">FB</a>
+                        <a href="#">IG</a>
+                        <a href="#">TW</a>
+                        <a href="#">YT</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>ลิงก์ด่วน</h3>
+                    <ul>
+                        <li><a href="#">หน้าแรก</a></li>
+                        <li><a href="#">รถทั้งหมด</a></li>
+                        <li><a href="#">บริการของเรา</a></li>
+                        <li><a href="#">เกี่ยวกับเรา</a></li>
+                        <li><a href="#">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ข้อมูลเพิ่มเติม</h3>
+                    <ul>
+                        <li><a href="#">คำถามที่พบบ่อย</a></li>
+                        <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#">วิธีการชำระเงิน</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ติดต่อเรา</h3>
+                    <ul>
+                        <li>📞 02-123-4567</li>
+                        <li>📧 info@carrent.com</li>
+                        <li>📍 123 ถนนรัชดาภิเษก กรุงเทพฯ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BM Carrental Chiangrai. สงวนลิขสิทธิ์ทุกประการ.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ตัวแปรสำหรับจัดการปฏิทินแยกกัน
+        let pickupCurrentDate = new Date(2025, 9, 1); // ตุลาคม 2025
+        let returnCurrentDate = new Date(2025, 9, 1); // ตุลาคม 2025
+        let selectedPickupDate = new Date(2025, 9, 13); // 13 ตุลาคม 2025
+        let selectedReturnDate = new Date(2025, 9, 15); // 15 ตุลาคม 2025
+        let currentCalendarType = 'pickup';
+        
+        // ตั้งค่าวันเริ่มต้น
+        document.addEventListener('DOMContentLoaded', function() {
+            // ตั้งค่าวันที่เริ่มต้น
+            setDefaultDates();
+            
+            // Tab switching functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // สร้างปฏิทินเริ่มต้น
+            generateCalendar('pickup');
+            generateCalendar('return');
+            updateSelectedDateInfo();
+
+            // keep native select; no custom dropdown init
+        });
+        
+        function setDefaultDates() {
+            const pickupDate = "13/10/2025 10:00 น.";
+            const returnDate = "15/10/2025 10:00 น.";
+            
+            document.getElementById('pickup-datetime').value = pickupDate;
+            document.getElementById('return-datetime').value = returnDate;
+        }
+        
+
+        
+        function openDateTimePicker(type) {
+            const modal = document.getElementById('datetime-modal');
+            modal.style.display = 'block';
+            
+            // เพิ่ม animation
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+            
+            generateCalendar('pickup');
+            generateCalendar('return');
+            updateSelectedDateInfo();
+        }
+        
+        function closeDateTimePicker() {
+            const modal = document.getElementById('datetime-modal');
+            modal.classList.remove('show');
+            
+            // รอให้ animation เสร็จก่อนปิด
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+        
+        function switchCalendar(type) {
+            currentCalendarType = type;
+            
+            // อัปเดต tabs
+            document.querySelectorAll('.calendar-tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-type="${type}"]`).classList.add('active');
+            
+            // อัปเดตปฏิทินที่แสดง
+            document.querySelectorAll('.calendar-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById(`${type}-calendar`).classList.add('active');
+        }
+        
+        function changeMonth(type, direction) {
+            if (type === 'pickup') {
+                pickupCurrentDate.setMonth(pickupCurrentDate.getMonth() + direction);
+                generateCalendar('pickup');
+            } else {
+                returnCurrentDate.setMonth(returnCurrentDate.getMonth() + direction);
+                generateCalendar('return');
+            }
+        }
+        
+        function generateCalendar(type) {
+            const calendarGrid = document.getElementById(`${type}-calendar-grid`);
+            const monthElement = document.getElementById(`${type}-month`);
+            const currentDate = type === 'pickup' ? pickupCurrentDate : returnCurrentDate;
+            const selectedDate = type === 'pickup' ? selectedPickupDate : selectedReturnDate;
+            
+            const monthNames = [
+                'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+            ];
+            
+            // อัปเดตชื่อเดือน
+            monthElement.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            
+            // ล้างปฏิทินเก่า (เก็บเฉพาะ header)
+            const headers = calendarGrid.querySelectorAll('.day-header');
+            calendarGrid.innerHTML = '';
+            headers.forEach(header => calendarGrid.appendChild(header));
+            
+            // สร้างปฏิทินใหม่
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const firstDay = new Date(year, month, 1);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            
+            const today = new Date();
+            
+            for (let i = 0; i < 42; i++) {
+                const cellDate = new Date(startDate);
+                cellDate.setDate(startDate.getDate() + i);
+                
+                const dayCell = document.createElement('div');
+                dayCell.className = 'day-cell';
+                dayCell.textContent = cellDate.getDate();
+                
+                // ตรวจสอบว่าเป็นเดือนปัจจุบันหรือไม่
+                if (cellDate.getMonth() !== month) {
+                    dayCell.classList.add('other-month');
+                }
+                
+                // ตรวจสอบว่าเป็นวันนี้หรือไม่
+                if (cellDate.toDateString() === today.toDateString()) {
+                    dayCell.classList.add('today');
+                }
+                
+                // ตรวจสอบการเลือกวันที่
+                if (cellDate.toDateString() === selectedDate.toDateString()) {
+                    dayCell.classList.add('selected');
+                }
+                
+                // เพิ่ม event listener สำหรับการคลิก
+                if (cellDate.getMonth() === month) {
+                    dayCell.addEventListener('click', () => selectDate(cellDate, type));
+                }
+                
+                calendarGrid.appendChild(dayCell);
+            }
+        }
+        
+        function selectDate(date, type) {
+            if (type === 'pickup') {
+                selectedPickupDate = new Date(date);
+            } else {
+                selectedReturnDate = new Date(date);
+            }
+            
+            generateCalendar(type);
+            updateSelectedDateInfo();
+        }
+        
+        function updateSelectedDateInfo() {
+            const monthNames = [
+                'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+            ];
+            
+            const formatDateInfo = (date) => {
+                const day = date.getDate();
+                const month = monthNames[date.getMonth()];
+                const year = date.getFullYear();
+                return `${day} ${month} ${year}`;
+            };
+            
+            document.getElementById('pickup-selected-date').textContent = formatDateInfo(selectedPickupDate);
+            document.getElementById('return-selected-date').textContent = formatDateInfo(selectedReturnDate);
+        }
+        
+        function confirmDateTime() {
+            const pickupHour = document.getElementById('pickup-hour-select').value;
+            const pickupMinute = document.getElementById('pickup-minute-select').value;
+            const returnHour = document.getElementById('return-hour-select').value;
+            const returnMinute = document.getElementById('return-minute-select').value;
+            
+            // รวมชั่วโมงและนาที
+            const pickupTime = `${pickupHour}:${pickupMinute}`;
+            const returnTime = `${returnHour}:${returnMinute}`;
+            
+            // แปลงวันที่เป็นรูปแบบไทย
+            const formatDate = (date) => {
+                const day = date.getDate();
+                const month = date.getMonth() + 1;
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            };
+            
+            // อัปเดตค่าที่แสดงใน input fields
+            document.getElementById('pickup-datetime').value = `${formatDate(selectedPickupDate)} ${pickupTime} น.`;
+            document.getElementById('return-datetime').value = `${formatDate(selectedReturnDate)} ${returnTime} น.`;
+            
+            closeDateTimePicker();
+        }
+        
+        // ฟังก์ชันตรวจสอบความถูกต้องของฟอร์ม
+        document.querySelector('.btn-search').addEventListener('click', function() {
+            const location = document.getElementById('pickup-location').value;
+            const pickupDateTime = document.getElementById('pickup-datetime').value;
+            const returnDateTime = document.getElementById('return-datetime').value;
+            const rentalType = document.querySelector('.tab-btn.active').getAttribute('data-type');
+            
+            if (!location.trim()) {
+                alert('กรุณากรอกสถานที่รับรถ');
+                return;
+            }
+            
+            if (!pickupDateTime || !returnDateTime) {
+                alert('กรุณาเลือกวันที่และเวลารับ-คืนรถ');
+                return;
+            }
+            
+            // ตรวจสอบว่าวันที่คืนรถต้องเป็นวันหลังจากวันที่รับรถ
+            if (selectedReturnDate <= selectedPickupDate) {
+                alert('วันที่คืนรถต้องเป็นวันหลังจากวันที่รับรถ');
+                return;
+            }
+            
+            // ส่งข้อมูลไปยังหน้า search results
+            const params = new URLSearchParams({
+                type: rentalType,
+                location: location,
+                pickup: pickupDateTime,
+                return: returnDateTime
+            });
+            
+            window.location.href = `search-results.html?${params.toString()}`;
+        });
+        
+        // ปิด modal เมื่อคลิกนอก modal
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('datetime-modal');
+            if (event.target === modal) {
+                closeDateTimePicker();
+            }
+        });
+        
+        // เพิ่ม ripple effect สำหรับ buttons
+        function addRippleEffect(element) {
+            element.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        }
+        
+        // เพิ่ม CSS animation สำหรับ ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .day-cell.selected {
+                animation: pulse 0.6s ease-in-out;
+            }
+            
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .calendar-container.active {
+                animation: slideIn 0.4s ease-out;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // เพิ่ม ripple effect ให้กับ buttons เมื่อ DOM โหลดเสร็จ
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const buttons = document.querySelectorAll('.btn-confirm, .calendar-tab-btn, .nav-btn');
+                buttons.forEach(addRippleEffect);
+            }, 100);
+        });
+        
+        // เพิ่ม smooth scroll effect สำหรับ calendar navigation
+        function smoothCalendarTransition() {
+            const containers = document.querySelectorAll('.calendar-container');
+            containers.forEach(container => {
+                container.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        }
+        
+        // เรียกใช้ smooth transition
+        smoothCalendarTransition();
+    </script>
+</body>
+</html>

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>ติดต่อเรา - BM Carrental Chiangrai</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .logo span {
+            color: #ff6b00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #1a73e8;
+        }
+        
+        .auth-buttons {
+            display: flex;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid #1a73e8;
+            color: #1a73e8;
+            margin-right: 10px;
+        }
+        
+        .btn-register {
+            background-color: #1a73e8;
+            border: 1px solid #1a73e8;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .btn-register:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+        }
+        
+        .breadcrumb li {
+            margin-right: 10px;
+        }
+        
+        .breadcrumb li:not(:last-child):after {
+            content: ">";
+            margin-left: 10px;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .contact-info p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .contact-details {
+            margin-bottom: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #1a73e8, #0d62d9);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+            font-size: 28px;
+            line-height: 1;
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.35);
+        }
+        .contact-icon i { color: #ffffff; opacity: 1; }
+        
+        .contact-text h3 {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 700;
+        }
+        
+        .contact-text p {
+            color: #666;
+            margin-bottom: 0;
+        }
+        
+        .business-hours {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .business-hours h3 {
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .business-hours h3 i {
+            margin-right: 10px;
+            color: #1a73e8;
+        }
+        
+        .hours-list {
+            list-style: none;
+        }
+        
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .day {
+            color: #333;
+        }
+        
+        .time {
+            color: #1a73e8;
+            font-weight: 500;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+        
+        .social-link:hover {
+            background-color: #0d62d9;
+            transform: translateY(-3px);
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-form h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .btn-submit {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .btn-submit:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Map Section */
+        .map-section {
+            padding: 0 0 80px 0;
+        }
+        
+        .map-container {
+            height: 600px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-placeholder {
+            height: 100%;
+            background: linear-gradient(135deg, #6a93cb, #1a73e8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .map-placeholder i {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .map-placeholder h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .faq-answer.active {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+        
+        /* Branches Section */
+        .branches {
+            padding: 80px 0;
+        }
+        
+        .branches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .branch-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .branch-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .branch-image {
+            height: 180px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .branch-details {
+            padding: 25px;
+        }
+        
+        .branch-details h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .branch-info {
+            margin-bottom: 20px;
+        }
+        
+        .branch-info p {
+            margin-bottom: 8px;
+            color: #666;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .branch-info i {
+            margin-right: 10px;
+            color: #1a73e8;
+            width: 20px;
+        }
+        
+        .btn-branch {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-branch:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 15px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .contact-form {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">BM <span>Carrental Chiangrai</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="carrental.html">รถทั้งหมด</a></li>
+                    <li><a href="serve.html">บริการของเรา</a></li>
+                    <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                    <li><a href="contact.html" class="active">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-login">เข้าสู่ระบบ</a>
+                <a href="regiter.html" class="btn btn-register">สมัครสมาชิก</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>ติดต่อเรา</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">หน้าแรก</a></li>
+                <li>ติดต่อเรา</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>ติดต่อเรา</h2>
+                    <p>เรายินดีให้คำปรึกษาและบริการทุกวัน ตลอด 24 ชั่วโมง สำหรับบริการฉุกเฉิน</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>ที่อยู่</h3>
+                                <p>123 ถนนรัชดาภิเษก แขวงดินแดง เขตดินแดง กรุงเทพมหานคร 10400</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>โทรศัพท์</h3>
+                                <p>02-123-4567 (สำนักงาน)</p>
+                                <p>089-123-4567 (บริการฉุกเฉิน)</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>อีเมล</h3>
+                                <p>info@carrent.com (ทั่วไป)</p>
+                                <p>support@carrent.com (ฝ่ายสนับสนุน)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="business-hours">
+                        <h3><i class="fa-solid fa-clock"></i> เวลาทำการ</h3>
+                        <ul class="hours-list">
+                            <li>
+                                <span class="day">จันทร์ - ศุกร์</span>
+                                <span class="time">08:00 - 20:00 น.</span>
+                            </li>
+                            <li>
+                                <span class="day">เสาร์ - อาทิตย์</span>
+                                <span class="time">08:00 - 18:00 น.</span>
+                            </li>
+                            <li>
+                                <span class="day">บริการฉุกเฉิน</span>
+                                <span class="time">ตลอด 24 ชั่วโมง</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <h3>ติดตามเราบนโซเชียลมีเดีย</h3>
+                    <div class="social-links">
+                        <a href="https://web.facebook.com/profile.php?id=61571914394128" class="social-link" target="_blank">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fa-brands fa-line"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h2>ส่งข้อความถึงเรา</h2>
+                    <p>มีคำถามหรือต้องการข้อมูลเพิ่มเติม? กรุณากรอกแบบฟอร์มด้านล่างนี้</p>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">ชื่อ-นามสกุล *</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">อีเมล *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">โทรศัพท์ *</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">หัวข้อ *</label>
+                            <select id="subject" required>
+                                <option value="" disabled selected>เลือกหัวข้อ</option>
+                                <option value="rental">สอบถามเกี่ยวกับการเช่ารถ</option>
+                                <option value="support">ปัญหาการใช้งานบริการ</option>
+                                <option value="complaint">ข้อร้องเรียน</option>
+                                <option value="partnership">ความร่วมทางธุรกิจ</option>
+                                <option value="other">อื่นๆ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">ข้อความ *</label>
+                            <textarea id="message" rows="5" placeholder="กรุณาระบุรายละเอียด..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">ส่งข้อความ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3750.5594293507434!2d99.80999247494977!3d19.94296222418507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30d707001521667f%3A0xf0c892bdc3cb17d3!2z4Lij4LiW4LmA4LiK4LmI4Liy4LmA4LiK4Li14Lii4LiH4Lij4Liy4LiiIEJNIENBUlJFTlRBTA!5e0!3m2!1sen!2sth!4v1761034462610!5m2!1sen!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Branches Section -->
+    <section class="branches">
+        <div class="container">
+            <div class="section-title">
+                <h2>สาขาของเรา</h2>
+                <p>เรามีสาขาให้บริการหลายแห่งเพื่อความสะดวกของคุณ</p>
+            </div>
+            <div class="branches-grid">
+                <div class="branch-card">
+                    <div class="branch-image">
+                        สาขาสีลม
+                    </div>
+                    <div class="branch-details">
+                        <h3>สาขาสีลม</h3>
+                        <div class="branch-info">
+                            <p><i class="fa-solid fa-location-dot"></i> 456 ถนนสีลม แขวงสีลม เขตบางรัก กรุงเทพฯ 10500</p>
+                            <p><i class="fa-solid fa-phone"></i> 02-234-5678</p>
+                            <p><i class="fa-solid fa-clock"></i> 08:00 - 20:00 น. (ทุกวัน)</p>
+                        </div>
+                        <a href="#" class="btn-branch">ดูเส้นทาง</a>
+                    </div>
+                </div>
+                
+                <div class="branch-card">
+                    <div class="branch-image">
+                        สาขารัชดา
+                    </div>
+                    <div class="branch-details">
+                        <h3>สาขารัชดา</h3>
+                        <div class="branch-info">
+                            <p><i class="fa-solid fa-location-dot"></i> 123 ถนนรัชดาภิเษก แขวงดินแดง เขตดินแดง กรุงเทพฯ 10400</p>
+                            <p><i class="fa-solid fa-phone"></i> 02-123-4567</p>
+                            <p><i class="fa-solid fa-clock"></i> 08:00 - 20:00 น. (ทุกวัน)</p>
+                        </div>
+                        <a href="#" class="btn-branch">ดูเส้นทาง</a>
+                    </div>
+                </div>
+                
+                <div class="branch-card">
+                    <div class="branch-image">
+                        สาขาอ่อนนุช
+                    </div>
+                    <div class="branch-details">
+                        <h3>สาขาอ่อนนุช</h3>
+                        <div class="branch-info">
+                            <p><i class="fa-solid fa-location-dot"></i> 789 ถนนอ่อนนุช แขวงสวนหลวง เขตสวนหลวง กรุงเทพฯ 10250</p>
+                            <p><i class="fa-solid fa-phone"></i> 02-345-6789</p>
+                            <p><i class="fa-solid fa-clock"></i> 08:00 - 18:00 น. (ทุกวัน)</p>
+                        </div>
+                        <a href="#" class="btn-branch">ดูเส้นทาง</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>คำถามที่พบบ่อย</h2>
+                <p>เรารวบรวมคำถามที่ลูกค้ามักสงสัยไว้ที่นี่</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ต้องมีอายุเท่าไหร่ถึงจะเช่ารถได้?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ผู้เช่าต้องมีอายุไม่ต่ำกว่า 21 ปี และมีใบขับขี่ที่ยังไม่หมดอายุอย่างน้อย 1 ปี</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ต้องจองล่วงหน้าก่อนกี่วัน?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>สามารถจองล่วงหน้าได้ตั้งแต่ 1 วันขึ้นไป เพื่อความมั่นใจในความพร้อมของรถ ในช่วงเทศกาลแนะนำให้จองล่วงหน้าอย่างน้อย 1 สัปดาห์</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>สามารถชำระเงินด้วยวิธีใดได้บ้าง?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>เรารองรับการชำระเงินด้วยเงินสด บัตรเครดิต/เดบิต หรือการโอนเงินผ่านธนาคาร</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>มีบริการรับส่งรถหรือไม่?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>เรามีบริการรับส่งรถฟรีในรัศมี 10 กม. จากสาขา สำหรับลูกค้าที่เช่ารถตั้งแต่ 3 วันขึ้นไป</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>หากเกิดอุบัติเหตุต้องทำอย่างไร?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>กรุณาติดต่อเราโดยด่วนที่เบอร์ฉุกเฉิน 089-123-4567 เรามีทีมงานพร้อมให้ความช่วยเหลือตลอด 24 ชั่วโมง</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>BM Carrental Chiangrai</h3>
+                    <p>บริการเช่ารถยนต์คุณภาพสูง พร้อมบริการที่รวดเร็วและราคาที่เป็นธรรม</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>ลิงก์ด่วน</h3>
+                    <ul>
+                        <li><a href="index.html">หน้าแรก</a></li>
+                        <li><a href="carrental.html">รถทั้งหมด</a></li>
+                        <li><a href="serve.html">บริการของเรา</a></li>
+                        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                        <li><a href="contact.html">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ข้อมูลเพิ่มเติม</h3>
+                    <ul>
+                        <li><a href="#">คำถามที่พบบ่อย</a></li>
+                        <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#">วิธีการชำระเงิน</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ติดต่อเรา</h3>
+                    <ul>
+                        <li><i class="fa-solid fa-phone"></i> 02-123-4567</li>
+                        <li><i class="fa-solid fa-envelope"></i> info@carrent.com</li>
+                        <li><i class="fa-solid fa-location-dot"></i> 123 ถนนรัชดาภิเษก กรุงเทพฯ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BM Carrental Chiangrai. สงวนลิขสิทธิ์ทุกประการ.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+                
+                const icon = question.querySelector('i');
+                if (answer.classList.contains('active')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+
+        // Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // ในเว็บไซต์จริงควรส่งข้อมูลไปยังเซิร์ฟเวอร์
+            // ตัวอย่างนี้แค่แสดงข้อความแจ้งเตือน
+            alert('ขอบคุณสำหรับข้อความของคุณ! เราจะติดต่อกลับโดยเร็วที่สุด');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

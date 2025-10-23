@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>เข้าสู่ระบบ | CarRent</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .logo span {
+            color: #ff6b00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #1a73e8;
+        }
+        
+        .auth-buttons {
+            display: flex;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid #1a73e8;
+            color: #1a73e8;
+            margin-right: 10px;
+        }
+        
+        .btn-register {
+            background-color: #1a73e8;
+            border: 1px solid #1a73e8;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .btn-register:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: #f8f9fa;
+            padding: 15px 0;
+        }
+        
+        .breadcrumb ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin-right: 10px;
+        }
+        
+        .breadcrumb li:not(:last-child):after {
+            content: ">";
+            margin-left: 10px;
+        }
+        
+        .breadcrumb a:hover {
+            color: #1a73e8;
+        }
+        
+        /* Login Section */
+        .login-section {
+            flex: 1;
+            padding: 60px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-container {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .login-image {
+            flex: 1;
+            background: linear-gradient(rgba(26, 115, 232, 0.8), rgba(26, 115, 232, 0.9)), url('https://images.unsplash.com/photo-1486496572940-2bb2341fdbdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-image h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .login-image p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        
+        .login-form-container {
+            flex: 1;
+            background-color: white;
+            padding: 50px;
+        }
+        
+        .login-header {
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #666;
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .login-form input:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .password-input {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: #1a73e8;
+            transition: color 0.3s;
+        }
+        
+        .forgot-password:hover {
+            color: #0d62d9;
+        }
+        
+        .btn-login-submit {
+            width: 100%;
+            padding: 15px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .btn-login-submit:hover {
+            background-color: #0d62d9;
+        }
+        
+        .social-login {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .social-login p {
+            color: #666;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .social-login p::before,
+        .social-login p::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .social-login p::before {
+            left: 0;
+        }
+        
+        .social-login p::after {
+            right: 0;
+        }
+        
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .facebook-btn {
+            background-color: #3b5998;
+        }
+        
+        .google-btn {
+            background-color: #dd4b39;
+        }
+        
+        .apple-btn {
+            background-color: #000;
+        }
+        
+        .register-link {
+            text-align: center;
+            color: #666;
+        }
+        
+        .register-link a {
+            color: #1a73e8;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .register-link a:hover {
+            color: #0d62d9;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 0 20px;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #1a73e8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 15px 0;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .login-image {
+                padding: 30px;
+            }
+            
+            .login-form-container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">Car<span>Rent</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="carrental.html">รถทั้งหมด</a></li>
+                    <li><a href="serve.html">บริการของเรา</a></li>
+                    <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                    <li><a href="contact.html">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-login">เข้าสู่ระบบ</a>
+                <a href="regiter.html" class="btn btn-register">สมัครสมาชิก</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="index.html">หน้าแรก</a></li>
+                <li>เข้าสู่ระบบ</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-image">
+                <h2>ยินดีต้อนรับสู่ CarRent</h2>
+                <p>เข้าสู่ระบบเพื่อเข้าถึงบริการเช่ารถยนต์คุณภาพสูงของเรา พร้อมสิทธิพิเศษและโปรโมชันสำหรับสมาชิก</p>
+            </div>
+            <div class="login-form-container">
+                <div class="login-header">
+                    <h1>เข้าสู่ระบบ</h1>
+                    <p>กรุณากรอกข้อมูลด้านล่างเพื่อเข้าสู่ระบบ</p>
+                </div>
+                
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">อีเมล</label>
+                        <input type="email" id="email" placeholder="กรอกอีเมลของคุณ" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">รหัสผ่าน</label>
+                        <div class="password-input">
+                            <input type="password" id="password" placeholder="กรอกรหัสผ่านของคุณ" required>
+                            <span class="password-toggle" id="passwordToggle">
+                                <i class="far fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="remember-forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">จดจำฉัน</label>
+                        </div>
+                        <a href="forgot-password.html" class="forgot-password">ลืมรหัสผ่าน?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-login-submit">เข้าสู่ระบบ</button>
+                    
+                    <div class="social-login">
+                        <p>หรือเข้าสู่ระบบด้วย</p>
+                        <div class="social-buttons">
+                            <a href="#" class="social-btn facebook-btn">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-btn google-btn">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <a href="#" class="social-btn apple-btn">
+                                <i class="fab fa-apple"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="register-link">
+                        <p>ยังไม่มีบัญชี? <a href="regiter.html">สมัครสมาชิก</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CarRent</h3>
+                    <p>บริการเช่ารถยนต์คุณภาพสูง พร้อมบริการที่รวดเร็วและราคาที่เป็นธรรม</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>ลิงก์ด่วน</h3>
+                    <ul>
+                        <li><a href="index.html">หน้าแรก</a></li>
+                        <li><a href="carrental.html">รถทั้งหมด</a></li>
+                        <li><a href="serve.html">บริการของเรา</a></li>
+                        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                        <li><a href="contact.html">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ข้อมูลเพิ่มเติม</h3>
+                    <ul>
+                        <li><a href="#">คำถามที่พบบ่อย</a></li>
+                        <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#">วิธีการชำระเงิน</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ติดต่อเรา</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 02-123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@carrent.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 ถนนรัชดาภิเษก กรุงเทพฯ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 CarRent. สงวนลิขสิทธิ์ทุกประการ.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle password visibility
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // ตรวจสอบข้อมูลพื้นฐาน (ในเว็บจริงควรส่งไปตรวจสอบกับเซิร์ฟเวอร์)
+            if (!email || !password) {
+                alert('กรุณากรอกอีเมลและรหัสผ่าน');
+                return;
+            }
+            
+            // จำลองการเข้าสู่ระบบสำเร็จ
+            alert('เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับกลับสู่ CarRent');
+            
+            // ในเว็บจริงควรเปลี่ยนเส้นทางไปยังหน้าหลักหรือหน้าที่ผู้ใช้ต้องการ
+            // window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

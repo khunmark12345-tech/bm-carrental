@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honda Civic - BM Carrental Chiangrai</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+        }
+        
+        .logo span {
+            color: #000; /* เปลี่ยนเป็นสีดำ */
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+        }
+        
+        .auth-buttons {
+            display: flex;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            margin-right: 10px;
+        }
+        
+        .btn-register {
+            background-color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            border: 1px solid #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #ffeaea;
+        }
+        
+        .btn-register:hover {
+            background-color: #b30816; /* เปลี่ยนเป็นสีแดงเข้ม */
+        }
+        
+        /* Page Header */
+        .page-header {
+            background-color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .page-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin-right: 10px;
+        }
+        
+        .breadcrumb li:not(:last-child):after {
+            content: ">";
+            margin-left: 10px;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Car Details */
+        .car-details {
+            padding: 40px 0;
+        }
+        
+        .car-details-container {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .car-gallery {
+            flex: 1.5;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 400px;
+            background-color: #eee;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+            overflow: hidden;
+        }
+        
+        .thumbnail-gallery {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 60px;
+            background-color: #eee;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .thumbnail:hover, .thumbnail.active {
+            border: 2px solid #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+        }
+        
+        .car-info {
+            flex: 1;
+        }
+        
+        .car-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .car-title h1 {
+            font-size: 28px;
+            color: #333;
+        }
+        
+        .car-price {
+            text-align: right;
+        }
+        
+        .price {
+            font-size: 28px;
+            color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            font-weight: bold;
+        }
+        
+        .price-period {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .car-badge {
+            display: inline-block;
+            background-color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .car-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .spec-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .spec-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ffeaea; /* เปลี่ยนเป็นสีแดงอ่อน */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+        }
+        
+        .spec-text h4 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+        
+        .spec-text p {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .car-features-list {
+            margin-bottom: 25px;
+        }
+        
+        .car-features-list h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .feature-item i {
+            color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .booking-widget {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+        }
+        
+        .booking-widget h3 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            border-color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            outline: none;
+        }
+        
+        .datetime-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .date-input, .time-input {
+            flex: 1;
+        }
+        
+        .btn-book {
+            background-color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-book:hover {
+            background-color: #b30816; /* เปลี่ยนเป็นสีแดงเข้ม */
+        }
+        
+        /* Tabs Section */
+        .tabs-section {
+            padding: 40px 0;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+        
+        .tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            border-bottom: 3px solid #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .description-content, .specs-content, .reviews-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .description-content h3, .specs-content h3, .reviews-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .description-content p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .specs-table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .specs-table td {
+            padding: 12px 15px;
+        }
+        
+        .specs-table td:first-child {
+            font-weight: 500;
+            color: #333;
+            width: 30%;
+        }
+        
+        .specs-table td:last-child {
+            color: #666;
+        }
+        
+        .review-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .review-item:last-child {
+            border-bottom: none;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .reviewer-name {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .review-date {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .review-rating {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+        
+        .review-text {
+            color: #666;
+        }
+        
+        /* Similar Cars */
+        .similar-cars {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .car-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .car-image {
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .car-card .car-details {
+            padding: 20px;
+        }
+        
+        .car-card .car-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .car-card .car-title h3 {
+            font-size: 18px;
+        }
+        
+        .car-card .car-price {
+            color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            font-weight: bold;
+        }
+        
+        .car-card .car-info {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .car-card .car-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .car-card .car-feature {
+            display: flex;
+            align-items: center;
+        }
+        
+        .car-card .btn-rent {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .car-card .btn-rent:hover {
+            background-color: #b30816; /* เปลี่ยนเป็นสีแดงเข้ม */
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #e10a1c; /* เปลี่ยนเป็นสีแดงของ Honda */
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .car-details-container {
+                flex-direction: column;
+            }
+            
+            .specs-table td:first-child {
+                width: 40%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 15px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .car-specs {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .datetime-group {
+                flex-direction: column;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">BM <span>Carrental Chiangrai</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="cars.html">รถทั้งหมด</a></li>
+                    <li><a href="services.html">บริการของเรา</a></li>
+                    <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                    <li><a href="contact.html">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-login">เข้าสู่ระบบ</a>
+                <a href="#" class="btn btn-register">สมัครสมาชิก</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Honda Civic</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">หน้าแรก</a></li>
+                <li><a href="cars.html">รถทั้งหมด</a></li>
+                <li>Honda Civic</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Car Details -->
+    <section class="car-details">
+        <div class="container">
+            <div class="car-details-container">
+                <div class="car-gallery">
+                    <div class="main-image">
+                        ภาพรถ Honda Civic สีขาว
+                    </div>
+                    <div class="thumbnail-gallery">
+                        <div class="thumbnail active">ภาพด้านหน้า</div>
+                        <div class="thumbnail">ภาพด้านข้าง</div>
+                        <div class="thumbnail">ภาพด้านหลัง</div>
+                        <div class="thumbnail">ภาพภายใน</div>
+                        <div class="thumbnail">ภาพเครื่องยนต์</div>
+                    </div>
+                </div>
+                
+                <div class="car-info">
+                    <div class="car-title">
+                        <div>
+                            <h1>Honda Civic 1.5 Turbo</h1>
+                            <div class="car-badge">พรีเมียม</div>
+                        </div>
+                        <div class="car-price">
+                            <div class="price">฿1,800</div>
+                            <div class="price-period">/ วัน</div>
+                        </div>
+                    </div>
+                    
+                    <div class="car-specs">
+                        <div class="spec-item">
+                            <div class="spec-icon">
+                                <i class="fas fa-gas-pump"></i>
+                            </div>
+                            <div class="spec-text">
+                                <h4>เชื้อเพลิง</h4>
+                                <p>เบนซิน</p>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="spec-text">
+                                <h4>เกียร์</h4>
+                                <p>ออโตเมติก CVT</p>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon">
+                                <i class="fas fa-user-friends"></i>
+                            </div>
+                            <div class="spec-text">
+                                <h4>ที่นั่ง</h4>
+                                <p>5 ที่นั่ง</p>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon">
+                                <i class="fas fa-suitcase"></i>
+                            </div>
+                            <div class="spec-text">
+                                <h4>กระเป๋า</h4>
+                                <p>3 ใบใหญ่</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="car-features-list">
+                        <h3>คุณสมบัติพิเศษ</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>หน้าจอสัมผัส 9 นิ้ว</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Apple CarPlay/Android Auto</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>ระบบควบคุมความเร็วอัตโนมัติ</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>ระบบเสียงคุณภาพสูง</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>กล้องรอบคัน</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>ระบบช่วยรักษาเลน</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-widget">
+                        <h3>จองรถคันนี้</h3>
+                        <form id="bookingForm">
+                            <div class="form-group">
+                                <label for="pickup-location">สถานที่รับรถ</label>
+                                <select id="pickup-location" required>
+                                    <option value="">เลือกสาขา</option>
+                                    <option value="ratchada">สาขารัชดา</option>
+                                    <option value="silon">สาขาสีลม</option>
+                                    <option value="onnuch">สาขาอ่อนนุช</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pickup-datetime">วันที่และเวลารับรถ</label>
+                                <div class="datetime-group">
+                                    <div class="date-input">
+                                        <input type="date" id="pickup-date" required>
+                                    </div>
+                                    <div class="time-input">
+                                        <input type="time" id="pickup-time" value="09:00" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="return-datetime">วันที่และเวลาคืนรถ</label>
+                                <div class="datetime-group">
+                                    <div class="date-input">
+                                        <input type="date" id="return-date" required>
+                                    </div>
+                                    <div class="time-input">
+                                        <input type="time" id="return-time" value="17:00" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-book">จองตอนนี้</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Section -->
+    <section class="tabs-section">
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" data-tab="description">รายละเอียด</div>
+                <div class="tab" data-tab="specs">ข้อมูลเทคนิค</div>
+                <div class="tab" data-tab="reviews">รีวิว</div>
+            </div>
+            
+            <div class="tab-content active" id="description">
+                <div class="description-content">
+                    <h3>เกี่ยวกับ Honda Civic</h3>
+                    <p>Honda Civic เป็นรถยนต์นั่งขนาดกลางที่ได้รับความนิยมสูงทั่วโลก ด้วยการออกแบบที่ทันสมัยและสมรรถนะการขับขี่ที่ยอดเยี่ยม ทำให้เหมาะสำหรับการใช้งานทั้งในเมืองและเดินทางไกล</p>
+                    <p>รุ่น 1.5 Turbo มาพร้อมกับเครื่องยนต์ประสิทธิภาพสูงที่ให้กำลัง 182 แรงม้า และแรงบิด 240 นิวตันเมตร พร้อมด้วยระบบเกียร์ CVT ที่ให้การขับขี่ที่ลื่นไหลและประหยัดน้ำมัน</p>
+                    <p>ภายในห้องโดยสารได้รับการออกแบบให้หรูหราและทันสมัย พร้อมด้วยเทคโนโลยีที่ครบครันเพื่อความสะดวกสบายและปลอดภัยในการขับขี่</p>
+                    <p>รถคันนี้เป็นรุ่นปี 2023 สภาพดีเยี่ยม พร้อมบริการตรวจเช็คและทำความสะอาดก่อนส่งมอบให้ลูกค้าทุกครั้ง</p>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="specs">
+                <div class="specs-content">
+                    <h3>ข้อมูลทางเทคนิค</h3>
+                    <table class="specs-table">
+                        <tr>
+                            <td>ยี่ห้อ/รุ่น</td>
+                            <td>Honda Civic 1.5 Turbo</td>
+                        </tr>
+                        <tr>
+                            <td>ปีที่ผลิต</td>
+                            <td>2023</td>
+                        </tr>
+                        <tr>
+                            <td>ประเภทเครื่องยนต์</td>
+                            <td>1.5L VTEC TURBO DOHC</td>
+                        </tr>
+                        <tr>
+                            <td>ความจุกระบอกสูบ</td>
+                            <td>1,498 cc</td>
+                        </tr>
+                        <tr>
+                            <td>ระบบเกียร์</td>
+                            <td>เกียร์อัตโนมัติ CVT</td>
+                        </tr>
+                        <tr>
+                            <td>กำลังสูงสุด</td>
+                            <td>182 แรงม้า @ 6,000 rpm</td>
+                        </tr>
+                        <tr>
+                            <td>แรงบิดสูงสุด</td>
+                            <td>240 นิวตันเมตร @ 1,700-4,500 rpm</td>
+                        </tr>
+                        <tr>
+                            <td>ระบบขับเคลื่อน</td>
+                            <td>ล้อหน้า</td>
+                        </tr>
+                        <tr>
+                            <td>ระบบเบรก</td>
+                            <td>ดิสก์ด้านหน้า / ดิสก์ด้านหลัง</td>
+                        </tr>
+                        <tr>
+                            <td>ระบบช่วยเบรก</td>
+                            <td>ABS, EBD, BA, VSA</td>
+                        </tr>
+                        <tr>
+                            <td>ระบบกันสะเทือน</td>
+                            <td>MacPherson Strut (หน้า) / Multi-Link (หลัง)</td>
+                        </tr>
+                        <tr>
+                            <td>ความจุถังน้ำมัน</td>
+                            <td>47 ลิตร</td>
+                        </tr>
+                        <tr>
+                            <td>อัตราการใช้น้ำมัน</td>
+                            <td>17.8 กม./ลิตร</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="reviews">
+                <div class="reviews-content">
+                    <h3>รีวิวจากลูกค้า</h3>
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-name">คุณธนวัฒน์ ศรีสุข</div>
+                            <div class="review-date">20 เมษายน 2023</div>
+                        </div>
+                        <div class="review-rating">★★★★★</div>
+                        <div class="review-text">ขับสบายมากครับ กำลังเครื่องดีมาก เหมาะกับการขับทั้งในเมืองและทางไกล รถสภาพดีมากและบริการยอดเยี่ยม</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-name">คุณอรุณี ใจดี</div>
+                            <div class="review-date">5 มีนาคม 2023</div>
+                        </div>
+                        <div class="review-rating">★★★★★</div>
+                        <div class="review-text">เช่ารถ Civic ไปเที่ยวเชียงใหม่ 5 วัน ขับสบายมาก ไม่เมื่อยเลย ระบบความปลอดภัยครบครัน ครั้งหน้าจะใช้บริการอีกแน่นอน</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-name">คุณวีรพล มั่นคง</div>
+                            <div class="review-date">15 กุมภาพันธ์ 2023</div>
+                        </div>
+                        <div class="review-rating">★★★★☆</div>
+                        <div class="review-text">รถสวยมาก ภายในหรูหรา ทันสมัย ขับขี่ดี ประหยัดน้ำมัน พนักงานบริการดีมาก ราคาคุ้มค่า</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Similar Cars -->
+    <section class="similar-cars">
+        <div class="container">
+            <div class="section-title">
+                <h2>รถรุ่นใกล้เคียง</h2>
+                <p>รถยนต์รุ่นอื่นๆ ที่คุณอาจสนใจ</p>
+            </div>
+            <div class="cars-grid">
+                <div class="car-card">
+                    <div class="car-image">ภาพรถ Toyota Corolla</div>
+                    <div class="car-details">
+                        <div class="car-title">
+                            <h3>Toyota Corolla</h3>
+                            <div class="car-price">฿1,500/วัน</div>
+                        </div>
+                        <div class="car-info">รถยนต์นั่งขนาดกลาง ทรงคลาสสิก</div>
+                        <div class="car-features">
+                            <div class="car-feature">⛽ เบนซิน</div>
+                            <div class="car-feature">👥 5 ที่นั่ง</div>
+                            <div class="car-feature">🛄 3 กระเป๋า</div>
+                        </div>
+                        <button class="btn-rent">ดูรายละเอียด</button>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-image">ภาพรถ Mazda 3</div>
+                    <div class="car-details">
+                        <div class="car-title">
+                            <h3>Mazda 3</h3>
+                            <div class="car-price">฿1,700/วัน</div>
+                        </div>
+                        <div class="car-info">รถยนต์นั่งขนาดกลาง หรูหรา</div>
+                        <div class="car-features">
+                            <div class="car-feature">⛽ เบนซิน</div>
+                            <div class="car-feature">👥 5 ที่นั่ง</div>
+                            <div class="car-feature">🛄 3 กระเป๋า</div>
+                        </div>
+                        <button class="btn-rent">ดูรายละเอียด</button>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-image">ภาพรถ Hyundai Elantra</div>
+                    <div class="car-details">
+                        <div class="car-title">
+                            <h3>Hyundai Elantra</h3>
+                            <div class="car-price">฿1,400/วัน</div>
+                        </div>
+                        <div class="car-info">รถยนต์นั่งขนาดกลาง ทันสมัย</div>
+                        <div class="car-features">
+                            <div class="car-feature">⛽ เบนซิน</div>
+                            <div class="car-feature">👥 5 ที่นั่ง</div>
+                            <div class="car-feature">🛄 3 กระเป๋า</div>
+                        </div>
+                        <button class="btn-rent">ดูรายละเอียด</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>BM Carrental Chiangrai</h3>
+                    <p>บริการเช่ารถยนต์คุณภาพสูง พร้อมบริการที่รวดเร็วและราคาที่เป็นธรรม</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>ลิงก์ด่วน</h3>
+                    <ul>
+                        <li><a href="index.html">หน้าแรก</a></li>
+                        <li><a href="cars.html">รถทั้งหมด</a></li>
+                        <li><a href="services.html">บริการของเรา</a></li>
+                        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                        <li><a href="contact.html">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ข้อมูลเพิ่มเติม</h3>
+                    <ul>
+                        <li><a href="#">คำถามที่พบบ่อย</a></li>
+                        <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#">วิธีการชำระเงิน</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ติดต่อเรา</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 02-123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@carrent.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 ถนนรัชดาภิเษก กรุงเทพฯ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BM Carrental Chiangrai. สงวนลิขสิทธิ์ทุกประการ.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ตั้งค่าวันเริ่มต้น
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            // รูปแบบวันที่สำหรับ input type="date"
+            const formattedDate = tomorrow.toISOString().split('T')[0];
+            
+            // ตั้งค่าวันที่รับรถเป็นวันพรุ่งนี้
+            document.getElementById('pickup-date').value = formattedDate;
+            
+            // ตั้งค่าวันที่คืนรถเป็น 3 วันหลังจากนี้
+            const returnDate = new Date(tomorrow);
+            returnDate.setDate(returnDate.getDate() + 3);
+            const formattedReturnDate = returnDate.toISOString().split('T')[0];
+            document.getElementById('return-date').value = formattedReturnDate;
+        });
+        
+        // Tab Switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Thumbnail Gallery
+        document.querySelectorAll('.thumbnail').forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+                
+                // ในเว็บไซต์จริงควรเปลี่ยนภาพหลักตาม thumbnail ที่เลือก
+                const mainImage = document.querySelector('.main-image');
+                mainImage.textContent = `ภาพรถ Honda Civic - ${thumb.textContent}`;
+            });
+        });
+        
+        // Form Submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const pickupDate = document.getElementById('pickup-date').value;
+            const returnDate = document.getElementById('return-date').value;
+            const location = document.getElementById('pickup-location').value;
+            
+            if (!location) {
+                alert('กรุณาเลือกสถานที่รับรถ');
+                return;
+            }
+            
+            if (!pickupDate || !returnDate) {
+                alert('กรุณาเลือกวันที่รับและคืนรถ');
+                return;
+            }
+            
+            if (new Date(pickupDate) >= new Date(returnDate)) {
+                alert('วันที่คืนรถต้องเป็นวันหลังจากวันที่รับรถ');
+                return;
+            }
+            
+            // ในเว็บไซต์จริงควรนำไปยังหน้าต่อไป
+            alert('การจอง Honda Civic สำเร็จ! เราจะติดต่อกลับเพื่อยืนยันการจอง');
+        });
+        
+        // Similar Cars - Redirect to detail pages
+        document.querySelectorAll('.btn-rent').forEach(button => {
+            button.addEventListener('click', function() {
+                const carName = this.closest('.car-card').querySelector('h3').textContent;
+                alert(`กำลังนำไปยังหน้ารายละเอียด ${carName}`);
+                // ในเว็บไซต์จริงควรนำไปยังหน้าข้อมูลรถคันนั้น
+            });
+        });
+    </script>
+</body>
+</html>

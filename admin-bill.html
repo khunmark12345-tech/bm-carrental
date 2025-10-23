@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการการชำระเงิน | CarRent Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #1a1a1a;
+            color: white;
+            transition: all 0.3s;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background-color: #1a73e8;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        .sidebar-header .logo span {
+            color: #ff6b00;
+        }
+        
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: #333;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .submenu {
+            background-color: #222;
+            display: none;
+        }
+        
+        .submenu.active {
+            display: block;
+        }
+        
+        .submenu-item {
+            padding: 10px 20px 10px 50px;
+            transition: all 0.3s;
+        }
+        
+        .submenu-item:hover {
+            background-color: #2a2a2a;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background-color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .toggle-sidebar {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 30px;
+        }
+        
+        .page-title {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .page-title h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #1a73e8;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0d62d9;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        /* Filters */
+        .filters {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-group {
+            flex: 1;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-header h2 {
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .card-body {
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background-color: #e8f5e9;
+            color: #28a745;
+        }
+        
+        .badge-warning {
+            background-color: #fff3e0;
+            color: #ff6b00;
+        }
+        
+        .badge-danger {
+            background-color: #ffebee;
+            color: #dc3545;
+        }
+        
+        .badge-info {
+            background-color: #e3f2fd;
+            color: #1a73e8;
+        }
+        
+        .badge-secondary {
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        
+        .stat-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .stat-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .bg-blue {
+            background-color: #e3f2fd;
+            color: #1a73e8;
+        }
+        
+        .bg-green {
+            background-color: #e8f5e9;
+            color: #28a745;
+        }
+        
+        .bg-orange {
+            background-color: #fff3e0;
+            color: #ff6b00;
+        }
+        
+        .bg-red {
+            background-color: #ffebee;
+            color: #dc3545;
+        }
+        
+        .bg-purple {
+            background-color: #f3e5f5;
+            color: #9c27b0;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 20px;
+            color: #333;
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        /* Payment Details */
+        .payment-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .detail-group {
+            margin-bottom: 15px;
+        }
+        
+        .detail-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .detail-group p {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid #1a73e8;
+            color: #1a73e8;
+            font-weight: 500;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Payment Methods Icons */
+        .payment-method {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow: visible;
+            }
+            
+            .sidebar .menu-text, .sidebar-header .logo {
+                display: none;
+            }
+            
+            .menu-item {
+                justify-content: center;
+                padding: 15px;
+            }
+            
+            .menu-item i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+            }
+            
+            .payment-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">Car<span>Rent</span> <span class="menu-text">Admin</span></div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="menu-text">แดชบอร์ด</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-car"></i>
+                <span class="menu-text">จัดการรถ</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-calendar-check"></i>
+                <span class="menu-text">จัดการการจอง</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">จัดการผู้ใช้</span>
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span class="menu-text">การชำระเงิน</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span class="menu-text">ตั้งค่าระบบ</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="menu-text">ออกจากระบบ</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="toggle-sidebar">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="user-info">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=1a73e8&color=fff" alt="Admin User">
+                <span>ผู้ดูแลระบบ</span>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <div class="page-title">
+                <h1>จัดการการชำระเงิน</h1>
+                <button class="btn btn-primary" id="addPaymentBtn">เพิ่มการชำระเงิน</button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon bg-blue">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>฿245,800</h3>
+                        <p>รายได้รวม</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>128</h3>
+                        <p>ชำระเงินแล้ว</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-orange">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>15</h3>
+                        <p>รอการชำระเงิน</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-red">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>8</h3>
+                        <p>การชำระเงินล้มเหลว</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-purple">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>5</h3>
+                        <p>รอการยืนยัน</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>สถานะการชำระเงิน</label>
+                        <select class="form-control" id="statusFilter">
+                            <option value="">ทั้งหมด</option>
+                            <option value="paid">ชำระเงินแล้ว</option>
+                            <option value="pending">รอการชำระเงิน</option>
+                            <option value="failed">ล้มเหลว</option>
+                            <option value="refunded">คืนเงินแล้ว</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>วิธีการชำระเงิน</label>
+                        <select class="form-control" id="methodFilter">
+                            <option value="">ทั้งหมด</option>
+                            <option value="credit_card">บัตรเครดิต</option>
+                            <option value="bank_transfer">โอนเงินผ่านธนาคาร</option>
+                            <option value="cash">เงินสด</option>
+                            <option value="qr_code">QR Code</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>ตั้งแต่วันที่</label>
+                        <input type="date" class="form-control" id="startDateFilter">
+                    </div>
+                    <div class="filter-group">
+                        <label>ถึงวันที่</label>
+                        <input type="date" class="form-control" id="endDateFilter">
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>ค้นหาจากรหัสการจองหรือชื่อลูกค้า</label>
+                        <input type="text" class="form-control" id="searchFilter" placeholder="กรอกรหัสการจองหรือชื่อลูกค้า">
+                    </div>
+                    <div style="display: flex; align-items: flex-end;">
+                        <button class="btn btn-primary" id="applyFilters">ใช้ตัวกรอง</button>
+                        <button class="btn" id="resetFilters" style="margin-left: 10px;">รีเซ็ตตัวกรอง</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="all-payments">การชำระเงินทั้งหมด</div>
+                <div class="tab" data-tab="pending-payments">รอการชำระเงิน</div>
+                <div class="tab" data-tab="paid-payments">ชำระเงินแล้ว</div>
+                <div class="tab" data-tab="failed-payments">ล้มเหลว</div>
+                <div class="tab" data-tab="refunded-payments">คืนเงินแล้ว</div>
+            </div>
+
+            <!-- Payments Table -->
+            <div class="card tab-content active" id="all-payments">
+                <div class="card-header">
+                    <h2>การชำระเงินทั้งหมด</h2>
+                    <div>
+                        <button class="btn btn-primary">ส่งออกรายงาน</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>รหัสการชำระเงิน</th>
+                                <th>รหัสการจอง</th>
+                                <th>ลูกค้า</th>
+                                <th>วันที่ชำระเงิน</th>
+                                <th>วิธีการชำระเงิน</th>
+                                <th>จำนวนเงิน</th>
+                                <th>สถานะ</th>
+                                <th>การดำเนินการ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PM00125</td>
+                                <td>#CR00125</td>
+                                <td>สมชาย ใจดี</td>
+                                <td>2 ม.ค. 2024</td>
+                                <td>
+                                    <span class="payment-method">
+                                        <i class="fas fa-credit-card"></i> บัตรเครดิต
+                                    </span>
+                                </td>
+                                <td>฿9,500</td>
+                                <td><span class="badge badge-success">ชำระเงินแล้ว</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-payment" data-id="PM00125">ดู</button>
+                                    <button class="btn btn-success btn-sm">พิมพ์ใบเสร็จ</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PM00124</td>
+                                <td>#CR00124</td>
+                                <td>สุนิสา ทรัพย์สิน</td>
+                                <td>1 ม.ค. 2024</td>
+                                <td>
+                                    <span class="payment-method">
+                                        <i class="fas fa-university"></i> โอนเงินผ่านธนาคาร
+                                    </span>
+                                </td>
+                                <td>฿5,300</td>
+                                <td><span class="badge badge-warning">รอการยืนยัน</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-payment" data-id="PM00124">ดู</button>
+                                    <button class="btn btn-success btn-sm">ยืนยัน</button>
+                                    <button class="btn btn-danger btn-sm">ปฏิเสธ</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PM00123</td>
+                                <td>#CR00123</td>
+                                <td>ประยุทธ์ จันทร์โอชา</td>
+                                <td>31 ธ.ค. 2023</td>
+                                <td>
+                                    <span class="payment-method">
+                                        <i class="fas fa-qrcode"></i> QR Code
+                                    </span>
+                                </td>
+                                <td>฿6,600</td>
+                                <td><span class="badge badge-success">ชำระเงินแล้ว</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-payment" data-id="PM00123">ดู</button>
+                                    <button class="btn btn-success btn-sm">พิมพ์ใบเสร็จ</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PM00122</td>
+                                <td>#CR00122</td>
+                                <td>วรรณา ตั้งใจเรียน</td>
+                                <td>30 ธ.ค. 2023</td>
+                                <td>
+                                    <span class="payment-method">
+                                        <i class="fas fa-money-bill-wave"></i> เงินสด
+                                    </span>
+                                </td>
+                                <td>฿4,500</td>
+                                <td><span class="badge badge-danger">ล้มเหลว</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-payment" data-id="PM00122">ดู</button>
+                                    <button class="btn btn-warning btn-sm">ลองใหม่อีกครั้ง</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PM00121</td>
+                                <td>#CR00121</td>
+                                <td>อนุชา พัฒนาการ</td>
+                                <td>29 ธ.ค. 2023</td>
+                                <td>
+                                    <span class="payment-method">
+                                        <i class="fas fa-credit-card"></i> บัตรเครดิต
+                                    </span>
+                                </td>
+                                <td>฿3,900</td>
+                                <td><span class="badge badge-secondary">คืนเงินแล้ว</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-payment" data-id="PM00121">ดู</button>
+                                    <button class="btn btn-success btn-sm">ดูรายละเอียดการคืนเงิน</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Details Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>รายละเอียดการชำระเงิน #PM00125</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="payment-details">
+                    <div>
+                        <h3>ข้อมูลการจอง</h3>
+                        <div class="detail-group">
+                            <label>รหัสการจอง</label>
+                            <p>#CR00125</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>ลูกค้า</label>
+                            <p>สมชาย ใจดี</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>รถที่จอง</label>
+                            <p>Toyota Hilux Revo</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>ระยะเวลาการเช่า</label>
+                            <p>5 ม.ค. 2024 - 10 ม.ค. 2024 (5 วัน)</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>ข้อมูลการชำระเงิน</h3>
+                        <div class="detail-group">
+                            <label>รหัสการชำระเงิน</label>
+                            <p>PM00125</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>วันที่ชำระเงิน</label>
+                            <p>2 มกราคม 2024, 14:30 น.</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>วิธีการชำระเงิน</label>
+                            <p>บัตรเครดิต</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>สถานะ</label>
+                            <p><span class="badge badge-success">ชำระเงินแล้ว</span></p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>รายละเอียดเงิน</h3>
+                        <div class="detail-group">
+                            <label>ค่าบริการเช่า</label>
+                            <p>฿9,000</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>ค่าประกัน</label>
+                            <p>฿500</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>ภาษี</label>
+                            <p>฿0</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>ยอดรวม</label>
+                            <p style="font-size: 18px; font-weight: bold; color: #1a73e8;">฿9,500</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>ข้อมูลบัตรเครดิต</h3>
+                        <div class="detail-group">
+                            <label>ประเภทบัตร</label>
+                            <p>Visa</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>เลขที่บัตร</label>
+                            <p>**** **** **** 1234</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>ชื่อบนบัตร</label>
+                            <p>SOMCHAI JAIDEE</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>วันหมดอายุ</label>
+                            <p>12/25</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button class="btn btn-success">พิมพ์ใบเสร็จ</button>
+                    <button class="btn btn-primary">ส่งอีเมลยืนยัน</button>
+                    <button class="btn btn-warning">คืนเงิน</button>
+                    <button class="btn btn-danger">ยกเลิกการชำระเงิน</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+            document.querySelector('.main-content').classList.toggle('expanded');
+        });
+
+        // Tab Switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show corresponding tab content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Payment Details Modal
+        const modal = document.getElementById('paymentModal');
+        const closeModal = document.querySelector('.close-modal');
+        const viewPaymentButtons = document.querySelectorAll('.view-payment');
+
+        viewPaymentButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                modal.style.display = 'flex';
+            });
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Filter Functionality
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            alert('ใช้ตัวกรองแล้ว');
+            // ในเว็บจริงควรมีการอัปเดตตารางตามตัวกรอง
+        });
+
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('methodFilter').value = '';
+            document.getElementById('startDateFilter').value = '';
+            document.getElementById('endDateFilter').value = '';
+            document.getElementById('searchFilter').value = '';
+            alert('รีเซ็ตตัวกรองแล้ว');
+            // ในเว็บจริงควรมีการรีเฟรชตาราง
+        });
+
+        // Add New Payment
+        document.getElementById('addPaymentBtn').addEventListener('click', function() {
+            alert('ไปยังหน้าสร้างการชำระเงินใหม่');
+            // ในเว็บจริงควรเปลี่ยนเส้นทางไปยังหน้าสร้างการชำระเงิน
+        });
+
+        // Set default dates for filters
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+            
+            document.getElementById('startDateFilter').value = firstDay.toISOString().split('T')[0];
+            document.getElementById('endDateFilter').value = today.toISOString().split('T')[0];
+        });
+    </script>
+</body>
+</html>

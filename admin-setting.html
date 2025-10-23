@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตั้งค่าระบบ | CarRent Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #1a1a1a;
+            color: white;
+            transition: all 0.3s;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background-color: #1a73e8;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        .sidebar-header .logo span {
+            color: #ff6b00;
+        }
+        
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: #333;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .submenu {
+            background-color: #222;
+            display: none;
+        }
+        
+        .submenu.active {
+            display: block;
+        }
+        
+        .submenu-item {
+            padding: 10px 20px 10px 50px;
+            transition: all 0.3s;
+        }
+        
+        .submenu-item:hover {
+            background-color: #2a2a2a;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background-color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .toggle-sidebar {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 30px;
+        }
+        
+        .page-title {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .page-title h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #1a73e8;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0d62d9;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        /* Settings Navigation */
+        .settings-nav {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .settings-nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .settings-nav li {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .settings-nav a {
+            display: block;
+            padding: 15px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .settings-nav a:hover, .settings-nav a.active {
+            background-color: #f8f9fa;
+            border-bottom: 3px solid #1a73e8;
+            color: #1a73e8;
+        }
+        
+        .settings-nav i {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+        
+        /* Settings Content */
+        .settings-content {
+            display: none;
+        }
+        
+        .settings-content.active {
+            display: block;
+        }
+        
+        .settings-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header h2 {
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .section-body {
+            padding: 20px;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .form-text {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #1a73e8;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+        
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .payment-method-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .payment-method-card.active {
+            border-color: #1a73e8;
+            background-color: #f0f7ff;
+        }
+        
+        .payment-icon {
+            font-size: 24px;
+            color: #666;
+        }
+        
+        .payment-info {
+            flex: 1;
+        }
+        
+        .payment-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .payment-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Branch Locations */
+        .branch-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .branch-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .branch-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .branch-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .branch-details {
+            color: #666;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow: visible;
+            }
+            
+            .sidebar .menu-text, .sidebar-header .logo {
+                display: none;
+            }
+            
+            .menu-item {
+                justify-content: center;
+                padding: 15px;
+            }
+            
+            .menu-item i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .settings-nav ul {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">Car<span>Rent</span> <span class="menu-text">Admin</span></div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="menu-text">แดชบอร์ด</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-car"></i>
+                <span class="menu-text">จัดการรถ</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-calendar-check"></i>
+                <span class="menu-text">จัดการการจอง</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">จัดการผู้ใช้</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span class="menu-text">การชำระเงิน</span>
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-cog"></i>
+                <span class="menu-text">ตั้งค่าระบบ</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="menu-text">ออกจากระบบ</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="toggle-sidebar">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="user-info">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=1a73e8&color=fff" alt="Admin User">
+                <span>ผู้ดูแลระบบ</span>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <div class="page-title">
+                <h1>ตั้งค่าระบบ</h1>
+                <button class="btn btn-primary" id="saveAllSettings">บันทึกการตั้งค่าทั้งหมด</button>
+            </div>
+
+            <!-- Settings Navigation -->
+            <div class="settings-nav">
+                <ul>
+                    <li>
+                        <a href="#" class="settings-nav-link active" data-target="general-settings">
+                            <i class="fas fa-cogs"></i>
+                            <span>ทั่วไป</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="settings-nav-link" data-target="booking-settings">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>การจอง</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="settings-nav-link" data-target="payment-settings">
+                            <i class="fas fa-credit-card"></i>
+                            <span>การชำระเงิน</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="settings-nav-link" data-target="notification-settings">
+                            <i class="fas fa-bell"></i>
+                            <span>การแจ้งเตือน</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="settings-nav-link" data-target="branch-settings">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>สาขา</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="settings-nav-link" data-target="email-settings">
+                            <i class="fas fa-envelope"></i>
+                            <span>อีเมล</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- General Settings -->
+            <div class="settings-content active" id="general-settings">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>ข้อมูลบริษัท</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="companyName">ชื่อบริษัท</label>
+                                <input type="text" class="form-control" id="companyName" value="CarRent">
+                            </div>
+                            <div class="form-group">
+                                <label for="companyPhone">เบอร์โทรศัพท์</label>
+                                <input type="text" class="form-control" id="companyPhone" value="02-123-4567">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyEmail">อีเมล</label>
+                            <input type="email" class="form-control" id="companyEmail" value="info@carrent.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="companyAddress">ที่อยู่</label>
+                            <textarea class="form-control" id="companyAddress" rows="3">123 ถนนรัชดาภิเษก กรุงเทพฯ</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyTaxId">เลขประจำตัวผู้เสียภาษี</label>
+                            <input type="text" class="form-control" id="companyTaxId" value="0123456789012">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>การตั้งค่าระบบ</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>โหมดบำรุงรักษา</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="maintenanceMode">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-text">เมื่อเปิดโหมดบำรุงรักษา ผู้ใช้จะไม่สามารถใช้งานระบบได้ชั่วคราว</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="timezone">เขตเวลา</label>
+                            <select class="form-control" id="timezone">
+                                <option value="asia/bangkok" selected>Asia/Bangkok (UTC+7)</option>
+                                <option value="utc">UTC</option>
+                                <option value="america/new_york">America/New_York (UTC-5)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateFormat">รูปแบบวันที่</label>
+                            <select class="form-control" id="dateFormat">
+                                <option value="dd/mm/yyyy" selected>วัน/เดือน/ปี (DD/MM/YYYY)</option>
+                                <option value="mm/dd/yyyy">เดือน/วัน/ปี (MM/DD/YYYY)</option>
+                                <option value="yyyy-mm-dd">ปี-เดือน-วัน (YYYY-MM-DD)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="currency">สกุลเงิน</label>
+                            <select class="form-control" id="currency">
+                                <option value="THB" selected>บาทไทย (THB)</option>
+                                <option value="USD">ดอลลาร์สหรัฐ (USD)</option>
+                                <option value="EUR">ยูโร (EUR)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Settings -->
+            <div class="settings-content" id="booking-settings">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>การตั้งค่าการจอง</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label for="minRentalDays">จำนวนวันเช่าต่ำสุด</label>
+                            <input type="number" class="form-control" id="minRentalDays" value="1" min="1">
+                            <div class="form-text">กำหนดจำนวนวันเช่าต่ำสุดที่ลูกค้าสามารถจองได้</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="maxRentalDays">จำนวนวันเช่าสูงสุด</label>
+                            <input type="number" class="form-control" id="maxRentalDays" value="30" min="1">
+                            <div class="form-text">กำหนดจำนวนวันเช่าสูงสุดที่ลูกค้าสามารถจองได้</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="advanceBookingDays">จำนวนวันล่วงหน้าที่สามารถจองได้</label>
+                            <input type="number" class="form-control" id="advanceBookingDays" value="90" min="1">
+                            <div class="form-text">กำหนดจำนวนวันล่วงหน้าที่ลูกค้าสามารถจองรถได้</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>อนุญาตการจองทับเวลา</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="allowOverlapping" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-text">เมื่อเปิดใช้งาน ระบบจะอนุญาตให้มีการจองรถคันเดียวกันในช่วงเวลาที่ทับกันได้</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cancellationPolicy">นโยบายการยกเลิกการจอง</label>
+                            <select class="form-control" id="cancellationPolicy">
+                                <option value="flexible" selected>ยืดหยุ่น (คืนเงินเต็มจำนวนหากยกเลิกก่อน 24 ชม.)</option>
+                                <option value="moderate">ปานกลาง (คืนเงิน 50% หากยกเลิกก่อน 48 ชม.)</option>
+                                <option value="strict">เข้มงวด (ไม่คืนเงิน)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Settings -->
+            <div class="settings-content" id="payment-settings">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>วิธีการชำระเงิน</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="payment-methods">
+                            <div class="payment-method-card active">
+                                <div class="payment-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <h4>บัตรเครดิต/เดบิต</h4>
+                                    <p>ชำระเงินด้วยบัตรเครดิตหรือบัตรเดบิต</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="payment-method-card active">
+                                <div class="payment-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <h4>โอนเงินผ่านธนาคาร</h4>
+                                    <p>ชำระเงินโดยการโอนเงินผ่านธนาคาร</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="payment-method-card">
+                                <div class="payment-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <h4>QR Code</h4>
+                                    <p>ชำระเงินโดยสแกน QR Code</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="payment-method-card active">
+                                <div class="payment-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <h4>เงินสด</h4>
+                                    <p>ชำระเงินด้วยเงินสดที่สาขา</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>การตั้งค่าภาษีและค่าธรรมเนียม</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label for="taxRate">อัตราภาษี (%)</label>
+                            <input type="number" class="form-control" id="taxRate" value="7" min="0" max="100" step="0.1">
+                            <div class="form-text">อัตราภาษีมูลค่าเพิ่ม (VAT)</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="insuranceFee">ค่าประกันพื้นฐาน (บาท/วัน)</label>
+                            <input type="number" class="form-control" id="insuranceFee" value="500" min="0">
+                            <div class="form-text">ค่าประกันพื้นฐานที่คิดเพิ่มในแต่ละวัน</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lateReturnFee">ค่าปรับการคืนรถล่าช้า (บาท/ชั่วโมง)</label>
+                            <input type="number" class="form-control" id="lateReturnFee" value="200" min="0">
+                            <div class="form-text">ค่าปรับเมื่อลูกค้าคืนรถล่าช้ากว่ากำหนด</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="settings-content" id="notification-settings">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>การแจ้งเตือนผ่านอีเมล</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>แจ้งเตือนการจองใหม่</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="newBookingNotification" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-text">ส่งอีเมลแจ้งเตือนเมื่อมีการจองใหม่</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>แจ้งเตือนการชำระเงิน</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="paymentNotification" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-text">ส่งอีเมลแจ้งเตือนเมื่อมีการชำระเงิน</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>แจ้งเตือนก่อนวันรับรถ</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="reminderNotification" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-text">ส่งอีเมลแจ้งเตือนลูกค้าก่อนวันรับรถ 1 วัน</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>แจ้งเตือนการยกเลิกการจอง</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="cancellationNotification" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-text">ส่งอีเมลแจ้งเตือนเมื่อมีการยกเลิกการจอง</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>การแจ้งเตือนผ่าน SMS</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>แจ้งเตือนการจองใหม่</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="smsBookingNotification">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-text">ส่ง SMS แจ้งเตือนเมื่อมีการจองใหม่</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>แจ้งเตือนก่อนวันรับรถ</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="smsReminderNotification" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-text">ส่ง SMS แจ้งเตือนลูกค้าก่อนวันรับรถ 1 วัน</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Branch Settings -->
+            <div class="settings-content" id="branch-settings">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>จัดการสาขา</h2>
+                        <button class="btn btn-primary btn-sm" id="addBranchBtn">เพิ่มสาขา</button>
+                    </div>
+                    <div class="section-body">
+                        <div class="branch-card">
+                            <div class="branch-header">
+                                <div class="branch-name">สาขารัชดา</div>
+                                <div class="branch-actions">
+                                    <button class="btn btn-success btn-sm">แก้ไข</button>
+                                    <button class="btn btn-danger btn-sm">ลบ</button>
+                                </div>
+                            </div>
+                            <div class="branch-details">
+                                <p>123 ถนนรัชดาภิเษก แขวงดินแดง เขตดินแดง กรุงเทพฯ 10400</p>
+                                <p>โทร: 02-123-4567</p>
+                                <p>เวลาทำการ: 08:00 - 20:00 น.</p>
+                            </div>
+                        </div>
+                        <div class="branch-card">
+                            <div class="branch-header">
+                                <div class="branch-name">สาขาสีลม</div>
+                                <div class="branch-actions">
+                                    <button class="btn btn-success btn-sm">แก้ไข</button>
+                                    <button class="btn btn-danger btn-sm">ลบ</button>
+                                </div>
+                            </div>
+                            <div class="branch-details">
+                                <p>456 ถนนสีลม แขวงสุริยวงศ์ เขตบางรัก กรุงเทพฯ 10500</p>
+                                <p>โทร: 02-234-5678</p>
+                                <p>เวลาทำการ: 08:00 - 20:00 น.</p>
+                            </div>
+                        </div>
+                        <div class="branch-card">
+                            <div class="branch-header">
+                                <div class="branch-name">สาขาอ่อนนุช</div>
+                                <div class="branch-actions">
+                                    <button class="btn btn-success btn-sm">แก้ไข</button>
+                                    <button class="btn btn-danger btn-sm">ลบ</button>
+                                </div>
+                            </div>
+                            <div class="branch-details">
+                                <p>789 ถนนอ่อนนุช แขวงสวนหลวง เขตสวนหลวง กรุงเทพฯ 10250</p>
+                                <p>โทร: 02-345-6789</p>
+                                <p>เวลาทำการ: 08:00 - 20:00 น.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Settings -->
+            <div class="settings-content" id="email-settings">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>การตั้งค่าอีเมล</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label for="smtpHost">SMTP Host</label>
+                            <input type="text" class="form-control" id="smtpHost" value="smtp.gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="smtpPort">SMTP Port</label>
+                            <input type="number" class="form-control" id="smtpPort" value="587">
+                        </div>
+                        <div class="form-group">
+                            <label for="smtpUsername">SMTP Username</label>
+                            <input type="text" class="form-control" id="smtpUsername" value="noreply@carrent.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="smtpPassword">SMTP Password</label>
+                            <input type="password" class="form-control" id="smtpPassword" placeholder="กรอกรหัสผ่าน SMTP">
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <span>ใช้การเข้ารหัส TLS</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="smtpTls" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h2>ทดสอบการส่งอีเมล</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label for="testEmail">อีเมลทดสอบ</label>
+                            <input type="email" class="form-control" id="testEmail" placeholder="กรอกอีเมลสำหรับทดสอบ">
+                        </div>
+                        <button class="btn btn-primary" id="testEmailBtn">ส่งอีเมลทดสอบ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+            document.querySelector('.main-content').classList.toggle('expanded');
+        });
+
+        // Settings Navigation
+        document.querySelectorAll('.settings-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.settings-nav-link').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all settings content
+                document.querySelectorAll('.settings-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show corresponding settings content
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // Save All Settings
+        document.getElementById('saveAllSettings').addEventListener('click', function() {
+            alert('บันทึกการตั้งค่าทั้งหมดเรียบร้อยแล้ว');
+            // ในเว็บจริงควรส่งข้อมูลการตั้งค่าทั้งหมดไปยังเซิร์ฟเวอร์
+        });
+
+        // Add Branch
+        document.getElementById('addBranchBtn').addEventListener('click', function() {
+            alert('ไปยังหน้าสร้างสาขาใหม่');
+            // ในเว็บจริงควรเปลี่ยนเส้นทางไปยังหน้าสร้างสาขา
+        });
+
+        // Test Email
+        document.getElementById('testEmailBtn').addEventListener('click', function() {
+            const testEmail = document.getElementById('testEmail').value;
+            if (!testEmail) {
+                alert('กรุณากรอกอีเมลสำหรับทดสอบ');
+                return;
+            }
+            
+            alert(`ส่งอีเมลทดสอบไปยัง ${testEmail} เรียบร้อยแล้ว`);
+            // ในเว็บจริงควรส่งคำขอทดสอบอีเมลไปยังเซิร์ฟเวอร์
+        });
+
+        // Toggle Payment Methods
+        document.querySelectorAll('.payment-method-card .toggle-switch input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const card = this.closest('.payment-method-card');
+                if (this.checked) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

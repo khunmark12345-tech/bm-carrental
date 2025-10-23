@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>ผลการค้นหารถเช่า - BM Carrental Chiangrai</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .logo span {
+            color: #ff6b00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #1a73e8;
+        }
+        
+        .auth-buttons {
+            display: flex;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid #1a73e8;
+            color: #1a73e8;
+            margin-right: 10px;
+        }
+        
+        .btn-register {
+            background-color: #1a73e8;
+            border: 1px solid #1a73e8;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .btn-register:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Search Banner */
+        .search-banner {
+            background-color: #1a73e8;
+            padding: 20px 0;
+            color: white;
+        }
+        
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .search-tabs {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 3px;
+        }
+        
+        .search-tab {
+            padding: 8px 16px;
+            background-color: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .search-tab.active {
+            background-color: white;
+            color: #1a73e8;
+        }
+        
+        .search-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .search-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .search-item i {
+            font-size: 16px;
+        }
+        
+        .search-btn {
+            background-color: white;
+            color: #1a73e8;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: auto;
+        }
+        
+        .search-btn:hover {
+            background-color: #f0f7ff;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-card {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .filter-card:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group input[type="text"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .filter-group input[type="text"]:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            margin-bottom: 10px;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1a73e8;
+            cursor: pointer;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1a73e8;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .price-range {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .filter-options {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .filter-option input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .btn-apply {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-apply:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Results Area */
+        .results-area {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .results-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .results-count {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .sort-dropdown {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            font-size: 14px;
+        }
+        
+        /* Car Cards */
+        .car-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .car-card {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s;
+            background-color: white;
+            margin-bottom: 20px;
+        }
+        
+        .car-card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .car-image {
+            width: 200px;
+            height: 150px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .car-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff6b00;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .car-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .car-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .car-specs {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .car-features {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .feature-item i {
+            margin-right: 8px;
+            color: #1a73e8;
+        }
+        
+        .company-logos {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .company-logo {
+            background-color: #1a73e8;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .stars {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+        
+        .rating span {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .payment-info {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .payment-info i {
+            margin-right: 8px;
+            color: #1a73e8;
+        }
+        
+        .car-price {
+            width: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 20px;
+        }
+        
+        .price-per-day {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+            margin-bottom: 5px;
+        }
+        
+        .price-total {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .rent-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .rent-btn:hover {
+            background-color: #0d62d9;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .company-logos {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .company-logo {
+            padding: 4px 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .stars {
+            color: #ffc107;
+        }
+        
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #666;
+            margin: 5px 0;
+        }
+        
+        .car-price {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+        
+        .price-per-day {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a73e8;
+        }
+        
+        .price-total {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .rent-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .rent-btn:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .car-card {
+                flex-direction: column;
+            }
+            
+            .car-image {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .search-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-btn {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">BM <span>Carrental Chiangrai</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="carrental.html">รถทั้งหมด</a></li>
+                    <li><a href="serve.html">บริการของเรา</a></li>
+                    <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                    <li><a href="contact.html">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-login">เข้าสู่ระบบ</a>
+                <a href="#" class="btn btn-register">สมัครสมาชิก</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Banner -->
+    <section class="search-banner">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-tabs">
+                    <button class="search-tab active" id="rental-type-tab">เช่ารถขับเอง</button>
+                    <button class="search-tab" id="driver-type-tab">เช่ารถพร้อมคนขับ</button>
+                </div>
+                
+                <div class="search-info">
+                    <div class="search-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="location-info">สนามบินภูเก็ต</span>
+                    </div>
+                    <div class="search-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="pickup-info">13/10/2025 10:00 น.</span>
+                    </div>
+                    <div class="search-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="return-info">15/10/2025 10:00 น.</span>
+                    </div>
+                </div>
+                
+                <button class="search-btn" onclick="goBackToSearch()">แก้ไขการค้นหา</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <span>ค้นหา</span>
+                    </div>
+                    <div class="filter-group">
+                        <input type="text" placeholder="ชื่อรถ, ยี่ห้อ, รุ่น" id="search-input">
+                    </div>
+                </div>
+                
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <span>ประเภทรถ</span>
+                    </div>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="type-sedan" checked>
+                            <label for="type-sedan">รถเก๋ง</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="type-suv">
+                            <label for="type-suv">รถ SUV</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="type-hatchback">
+                            <label for="type-hatchback">รถฮัทช์แบ็ก</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="type-pickup">
+                            <label for="type-pickup">รถกระบะ</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="type-van">
+                            <label for="type-van">รถตู้/วิน</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="type-luxury">
+                            <label for="type-luxury">รถหรู</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <span>ช่วงราคา (ต่อวัน)</span>
+                    </div>
+                    <div class="filter-group">
+                        <input type="range" min="500" max="5000" value="2500" class="slider" id="price-slider">
+                        <div class="price-range">
+                            <span>฿500</span>
+                            <span>฿5,000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <span>จำนวนที่นั่ง</span>
+                    </div>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="seats-2">
+                            <label for="seats-2">2 ที่นั่ง</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="seats-4">
+                            <label for="seats-4">4 ที่นั่ง</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="seats-5" checked>
+                            <label for="seats-5">5 ที่นั่ง</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="seats-7">
+                            <label for="seats-7">7 ที่นั่ง</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="seats-8">
+                            <label for="seats-8">8 ที่นั่งขึ้นไป</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <span>เชื้อเพลิง</span>
+                    </div>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="fuel-gasoline" checked>
+                            <label for="fuel-gasoline">น้ำมันเบนซิน</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fuel-diesel">
+                            <label for="fuel-diesel">น้ำมันดีเซล</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fuel-electric">
+                            <label for="fuel-electric">ไฟฟ้า</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fuel-hybrid">
+                            <label for="fuel-hybrid">ไฮบริด</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-apply" onclick="applyFilters()">ใช้ตัวกรอง</button>
+            </aside>
+
+            <!-- Results Area -->
+            <main class="results-area">
+                <div class="results-header">
+                    <div>
+                        <div class="results-title">ผลการค้นหา: รถว่างทั้งหมด</div>
+                        <div class="results-count">พบรถว่าง <span id="car-count">273</span> คัน</div>
+                    </div>
+                    <select class="sort-dropdown">
+                        <option>เรียงผลตาม : ราคารวม (น้อยไปมาก)</option>
+                        <option>เรียงผลตาม : ราคารวม (มากไปน้อย)</option>
+                        <option>เรียงผลตาม : ชื่อรถ (A-Z)</option>
+                        <option>เรียงผลตาม : ชื่อรถ (Z-A)</option>
+                    </select>
+                </div>
+
+                <div class="car-list" id="car-list">
+                    <!-- Car cards will be populated by JavaScript -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // ข้อมูลรถจาก carrental.html
+        const carData = [
+            {
+                id: 1,
+                name: "Toyota Yaris (หรือเทียบเท่า)",
+                image: "Toyota Yaris",
+                specs: "รถเก๋ง 4 ประตู. เกียร์ออโต้ 1,200 cc. น้ำมันเบนซิน",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Thrifty"],
+                rating: 4.6,
+                reviewCount: 19,
+                pricePerDay: 709,
+                totalPrice: 1418,
+                days: 2,
+                link: "Toyota Yaris.html",
+                badge: "ยอดนิยม",
+                info: "รถยนต์นั่งขนาดเล็ก ประหยัดน้ำมัน",
+                fuel: "เบนซิน",
+                seats: "5 ที่นั่ง",
+                luggage: "2 กระเป๋า"
+            },
+            {
+                id: 2,
+                name: "Toyota Yaris (หรือเทียบเท่า)",
+                image: "Toyota Yaris",
+                specs: "รถเก๋ง 4 ประตู. เกียร์ออโต้ 1,200 cc. น้ำมันเบนซิน",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Hertz"],
+                rating: 4.8,
+                reviewCount: 11,
+                pricePerDay: 759,
+                totalPrice: 1518,
+                days: 2,
+                link: "Toyota Yaris.html",
+                badge: "",
+                info: "รถยนต์นั่งขนาดเล็ก ประหยัดน้ำมัน",
+                fuel: "เบนซิน",
+                seats: "5 ที่นั่ง",
+                luggage: "2 กระเป๋า"
+            },
+            {
+                id: 3,
+                name: "Honda City (หรือเทียบเท่า)",
+                image: "Honda City",
+                specs: "รถเก๋ง 4 ประตู. เกียร์ออโต้ 1,500 cc. น้ำมันเบนซิน",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Thrifty"],
+                rating: 4.5,
+                reviewCount: 25,
+                pricePerDay: 1400,
+                totalPrice: 2800,
+                days: 2,
+                link: "honda-city.html",
+                badge: "",
+                info: "รถยนต์นั่งขนาดกลาง ทรงสปอร์ต",
+                fuel: "เบนซิน",
+                seats: "5 ที่นั่ง",
+                luggage: "3 กระเป๋า"
+            },
+            {
+                id: 4,
+                name: "Toyota Fortuner (หรือเทียบเท่า)",
+                image: "Toyota Fortuner",
+                specs: "รถ SUV 7 ที่นั่ง. เกียร์ออโต้ 2,400 cc. น้ำมันดีเซล",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Hertz"],
+                rating: 4.7,
+                reviewCount: 32,
+                pricePerDay: 2500,
+                totalPrice: 5000,
+                days: 2,
+                link: "toyota-fortuner.html",
+                badge: "",
+                info: "รถยนต์อเนกประสงค์ 7 ที่นั่ง",
+                fuel: "ดีเซล",
+                seats: "7 ที่นั่ง",
+                luggage: "4 กระเป๋า"
+            },
+            {
+                id: 5,
+                name: "MG EP (หรือเทียบเท่า)",
+                image: "MG EP",
+                specs: "รถไฟฟ้า 5 ที่นั่ง. เกียร์ออโต้. ไฟฟ้า",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Thrifty"],
+                rating: 4.4,
+                reviewCount: 15,
+                pricePerDay: 1800,
+                totalPrice: 3600,
+                days: 2,
+                link: "mg-ep.html",
+                badge: "ใหม่",
+                info: "รถยนต์ไฟฟ้า ขนาดกะทัดรัด",
+                fuel: "ไฟฟ้า",
+                seats: "5 ที่นั่ง",
+                luggage: "2 กระเป๋า"
+            },
+            {
+                id: 6,
+                name: "Honda Civic (หรือเทียบเท่า)",
+                image: "Honda Civic",
+                specs: "รถเก๋ง 4 ประตู. เกียร์ออโต้ 1,800 cc. น้ำมันเบนซิน",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Hertz"],
+                rating: 4.6,
+                reviewCount: 28,
+                pricePerDay: 1600,
+                totalPrice: 3200,
+                days: 2,
+                link: "honda-civic.html",
+                badge: "",
+                info: "รถยนต์นั่งขนาดกลาง หรูหรา",
+                fuel: "เบนซิน",
+                seats: "5 ที่นั่ง",
+                luggage: "3 กระเป๋า"
+            },
+            {
+                id: 7,
+                name: "Toyota Hilux Revo (หรือเทียบเท่า)",
+                image: "Toyota Hilux Revo",
+                specs: "รถกระบะ 4 ประตู. เกียร์ออโต้ 2,400 cc. น้ำมันดีเซล",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Thrifty"],
+                rating: 4.5,
+                reviewCount: 22,
+                pricePerDay: 1800,
+                totalPrice: 3600,
+                days: 2,
+                link: "ToyotaHiluxRevo.html",
+                badge: "",
+                info: "รถกระบะ 4 ประตู สไตล์โมเดิร์น",
+                fuel: "ดีเซล",
+                seats: "5 ที่นั่ง",
+                luggage: "4 กระเป๋า"
+            },
+            {
+                id: 8,
+                name: "Nissan March (หรือเทียบเท่า)",
+                image: "Nissan March",
+                specs: "รถเก๋ง 4 ประตู. เกียร์ออโต้ 1,200 cc. น้ำมันเบนซิน",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Hertz"],
+                rating: 4.3,
+                reviewCount: 18,
+                pricePerDay: 1000,
+                totalPrice: 2000,
+                days: 2,
+                link: "Nissan March.html",
+                badge: "",
+                info: "รถยนต์นั่งขนาดเล็ก น่ารัก ขับเคลื่อนง่าย",
+                fuel: "เบนซิน",
+                seats: "5 ที่นั่ง",
+                luggage: "2 กระเป๋า"
+            },
+            {
+                id: 9,
+                name: "Mercedes-Benz C-Class (หรือเทียบเท่า)",
+                image: "Mercedes-Benz C-Class",
+                specs: "รถหรู 4 ประตู. เกียร์ออโต้ 2,000 cc. น้ำมันเบนซิน",
+                features: ["ฟรีประกันภัยชั้น 1 ขั้นพื้นฐาน"],
+                companies: ["INTER", "Thrifty"],
+                rating: 4.9,
+                reviewCount: 45,
+                pricePerDay: 4500,
+                totalPrice: 9000,
+                days: 2,
+                link: "Mercedes-Benz C-Class.html",
+                badge: "พิเศษ",
+                info: "รถยนต์นั่งหรู ประสิทธิภาพสูง",
+                fuel: "เบนซิน",
+                seats: "5 ที่นั่ง",
+                luggage: "3 กระเป๋า"
+            }
+        ];
+
+        // โหลดข้อมูลจาก URL parameters
+        function loadSearchData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const rentalType = urlParams.get('type') || 'self-drive';
+            const location = urlParams.get('location') || 'สนามบินภูเก็ต';
+            const pickupDate = urlParams.get('pickup') || '13/10/2025 10:00 น.';
+            const returnDate = urlParams.get('return') || '15/10/2025 10:00 น.';
+
+            // อัปเดต UI
+            if (rentalType === 'self-drive') {
+                document.getElementById('rental-type-tab').textContent = 'เช่ารถขับเอง';
+                document.getElementById('driver-type-tab').textContent = 'เช่ารถพร้อมคนขับ';
+                document.getElementById('rental-type-tab').classList.add('active');
+                document.getElementById('driver-type-tab').classList.remove('active');
+            } else {
+                document.getElementById('rental-type-tab').textContent = 'เช่ารถขับเอง';
+                document.getElementById('driver-type-tab').textContent = 'เช่ารถพร้อมคนขับ';
+                document.getElementById('rental-type-tab').classList.remove('active');
+                document.getElementById('driver-type-tab').classList.add('active');
+            }
+
+            document.getElementById('location-info').textContent = location;
+            document.getElementById('pickup-info').textContent = pickupDate;
+            document.getElementById('return-info').textContent = returnDate;
+        }
+
+        // แสดงรายการรถ
+        function displayCars(carsToShow = carData) {
+            const carsContainer = document.getElementById('car-list');
+            if (!carsContainer) return;
+            
+            carsContainer.innerHTML = '';
+            
+            carsToShow.forEach(car => {
+                const carCard = document.createElement('div');
+                carCard.className = 'car-card';
+                carCard.innerHTML = `
+                    <div class="car-image">
+                        ${car.badge ? `<div class="car-badge">${car.badge}</div>` : ''}
+                        <span>${car.image}</span>
+                    </div>
+                    <div class="car-details">
+                        <div class="car-title">${car.name}</div>
+                        <div class="car-specs">${car.specs}</div>
+                        <div class="car-features">
+                            ${car.features.map(feature => `<div class="feature-item"><i class="fas fa-check"></i> ${feature}</div>`).join('')}
+                        </div>
+                        <div class="company-logos">
+                            ${car.companies.map(company => `<div class="company-logo">${company}</div>`).join('')}
+                        </div>
+                        <div class="rating">
+                            <div class="stars">★★★★☆</div>
+                            <span>${car.rating} (${car.reviewCount} รีวิว)</span>
+                        </div>
+                        <div class="payment-info">
+                            <i class="fab fa-cc-visa"></i>
+                            <span>จ่ายผ่านบัตรเครดิตเท่านั้น!</span>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <div class="price-per-day">฿ ${car.pricePerDay}</div>
+                        <div class="price-total">รวม ${car.days} วัน ฿${car.totalPrice}</div>
+                        <a href="${car.link}" class="rent-btn">รายละเอียดรถเช่า</a>
+                    </div>
+                `;
+                carsContainer.appendChild(carCard);
+            });
+        }
+
+        // กลับไปหน้าแรก
+        function goBackToSearch() {
+            window.location.href = 'index.html';
+        }
+
+        // ฟังก์ชันสำหรับกรองรถ
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const priceRange = document.getElementById('price-slider').value;
+            
+            // ดึงข้อมูล checkbox ที่เลือก
+            const selectedTypes = [];
+            const typeCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            typeCheckboxes.forEach(checkbox => {
+                if (checkbox.id.startsWith('type-')) {
+                    selectedTypes.push(checkbox.id.replace('type-', ''));
+                }
+            });
+            
+            // กรองรถตามเงื่อนไข
+            let filteredCars = carData.filter(car => {
+                // กรองตามคำค้นหา
+                if (searchTerm && !car.name.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                
+                // กรองตามราคา
+                if (car.pricePerDay > priceRange) {
+                    return false;
+                }
+                
+                // กรองตามประเภทรถ
+                if (selectedTypes.length > 0) {
+                    const carType = getCarType(car.name);
+                    if (!selectedTypes.includes(carType)) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            displayCars(filteredCars);
+        }
+        
+        // ฟังก์ชันกำหนดประเภทรถจากชื่อรถ
+        function getCarType(carName) {
+            const name = carName.toLowerCase();
+            if (name.includes('yaris') || name.includes('city') || name.includes('civic')) {
+                return 'sedan';
+            } else if (name.includes('fortuner') || name.includes('hilux')) {
+                return 'pickup';
+            } else if (name.includes('mercedes') || name.includes('bmw')) {
+                return 'luxury';
+            } else if (name.includes('mg')) {
+                return 'suv';
+            } else {
+                return 'sedan'; // default
+            }
+        }
+        
+        // ล้างตัวกรองทั้งหมด
+        function clearAllFilters() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            document.querySelectorAll('.price-input').forEach(input => {
+                input.value = '';
+            });
+        }
+
+        // สลับระหว่าง tabs
+        function switchRentalType(type) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const location = urlParams.get('location') || 'สนามบินภูเก็ต';
+            const pickupDate = urlParams.get('pickup') || '13/10/2025 10:00 น.';
+            const returnDate = urlParams.get('return') || '15/10/2025 10:00 น.';
+            
+            const newParams = new URLSearchParams({
+                type: type,
+                location: location,
+                pickup: pickupDate,
+                return: returnDate
+            });
+            
+            window.location.href = `search-results.html?${newParams.toString()}`;
+        }
+
+        // เพิ่ม event listeners สำหรับ tabs
+        function addTabListeners() {
+            document.getElementById('rental-type-tab').addEventListener('click', function() {
+                switchRentalType('self-drive');
+            });
+            
+            document.getElementById('driver-type-tab').addEventListener('click', function() {
+                switchRentalType('with-driver');
+            });
+        }
+
+        // โหลดหน้า
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSearchData();
+            displayCars();
+            addTabListeners();
+            
+            // เพิ่ม event listeners สำหรับการกรอง
+            const searchInput = document.getElementById('search-input');
+            const priceSlider = document.getElementById('price-slider');
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', applyFilters);
+            }
+            
+            if (priceSlider) {
+                priceSlider.addEventListener('input', applyFilters);
+            }
+            
+            // เพิ่ม event listeners สำหรับ checkboxes
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', applyFilters);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>เกี่ยวกับเรา - BM Carrental Chiangrai</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .logo span {
+            color: #ff6b00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #1a73e8;
+        }
+        
+        .auth-buttons {
+            display: flex;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid #1a73e8;
+            color: #1a73e8;
+            margin-right: 10px;
+        }
+        
+        .btn-register {
+            background-color: #1a73e8;
+            border: 1px solid #1a73e8;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .btn-register:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+        }
+        
+        .breadcrumb li {
+            margin-right: 10px;
+        }
+        
+        .breadcrumb li:not(:last-child):after {
+            content: ">";
+            margin-left: 10px;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* About Content */
+        .about-content {
+            padding: 80px 0;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image-placeholder {
+            height: 400px;
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .mission-vision {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .mission, .vision {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .mission h3, .vision h3 {
+            color: #1a73e8;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mission h3 i, .vision h3 i {
+            margin-right: 10px;
+        }
+        
+        /* Team Section */
+        .team {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .member-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .team-member h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .team-member .position {
+            color: #1a73e8;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .team-member p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .contact-info p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .contact-details {
+            margin-bottom: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .contact-text h3 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .contact-text p {
+            color: #666;
+            margin-bottom: 0;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #0d62d9;
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .btn-submit {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Values Section */
+        .values {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .value-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .value-icon {
+            font-size: 40px;
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        
+        .value-card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .value-card p {
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .mission-vision {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 15px 0;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">BM <span>Carrental Chiangrai</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="carrental.html">รถทั้งหมด</a></li>
+                    <li><a href="serve.html">บริการของเรา</a></li>
+                    <li><a href="about.html" class="active">เกี่ยวกับเรา</a></li>
+                    <li><a href="contact.html">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-login">เข้าสู่ระบบ</a>
+                <a href="regiter.html" class="btn btn-register">สมัครสมาชิก</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>เกี่ยวกับเรา</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">หน้าแรก</a></li>
+                <li>เกี่ยวกับเรา</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+        <div class="container">
+            <div class="about-image">
+                <div class="about-image-placeholder">
+                    <!-- ใส่รูปภาพเกี่ยวกับบริษัทของคุณที่นี่ -->
+                    รูปภาพเกี่ยวกับบริษัท
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>เรื่องราวของ BM Carrental Chiangrai</h2>
+                <p>BM Carrental Chiangrai ก่อตั้งขึ้นจากความรักในการเดินทางและความต้องการให้ทุกคนได้สัมผัสประสบการณ์การขับขี่ที่ปลอดภัยและสะดวกสบาย เราเริ่มต้นจากธุรกิจครอบครัวเล็กๆ ในปี 2010 และเติบโตมาพร้อมกับความไว้วางใจจากลูกค้ามากมาย</p>
+                <p>วันนี้ BM Carrental Chiangrai มีรถให้เช่ากว่า 100 คัน ครอบคลุมทุกความต้องการในการเดินทาง ตั้งแต่รถยนต์ขนาดเล็กประหยัดน้ำมันไปจนถึงรถครอบครัวขนาดใหญ่และรถหรูสำหรับโอกาสพิเศษ</p>
+                
+                <div class="mission-vision">
+                    <div class="mission">
+                        <h3><i class="fas fa-bullseye"></i> ภารกิจของเรา</h3>
+                        <p>มอบบริการเช่ารถที่มีคุณภาพ ด้วยราคาที่เป็นธรรม และบริการหลังการขายที่ดียิ่ง เพื่อสร้างประสบการณ์ที่ดีที่สุดให้กับลูกค้าทุกท่าน</p>
+                    </div>
+                    <div class="vision">
+                        <h3><i class="fas fa-eye"></i> วิสัยทัศน์</h3>
+                        <p>เป็นบริษัทให้บริการเช่ารถอันดับหนึ่งในประเทศไทย ที่ลูกค้าเชื่อมั่นและไว้วางใจในการให้บริการทุกครั้งที่เดินทาง</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values">
+        <div class="container">
+            <div class="section-title">
+                <h2>คุณค่าที่เรามอบให้</h2>
+                <p>เรามุ่งมั่นส่งมอบคุณค่าสูงสุดให้กับลูกค้าทุกท่านผ่านหลักการเหล่านี้</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🛡️</div>
+                    <h3>ความปลอดภัย</h3>
+                    <p>รถทุกคันผ่านการตรวจสอบสภาพอย่างละเอียดก่อนส่งมอบให้ลูกค้า พร้อมประกันภัยที่ครอบคลุม</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⏱️</div>
+                    <h3>ตรงเวลา</h3>
+                    <p>เราให้ความสำคัญกับเวลาของลูกค้า มอบรถตามนัดหมายอย่างตรงเวลาเสมอ</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💎</div>
+                    <h3>คุณภาพ</h3>
+                    <p>รถทุกคันมีความสะอาดและพร้อมใช้งาน พร้อมอุปกรณ์ครบครัน</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>บริการจริงใจ</h3>
+                    <p>ทีมงานของเราพร้อมให้คำแนะนำและช่วยเหลือลูกค้าอย่างจริงใจตลอด 24 ชั่วโมง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>ทีมงานของเรา</h2>
+                <p>พบกับทีมงานมืออาชีพที่พร้อมให้บริการคุณ</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <!-- ใส่รูปภาพสมาชิกทีม -->
+                        รูปภาพผู้จัดการ
+                    </div>
+                    <h3>คุณสมชาย ใจดี</h3>
+                    <div class="position">ผู้จัดการทั่วไป</div>
+                    <p>ดูแลการดำเนินงานทั้งหมดของบริษัท มีประสบการณ์ด้านบริการลูกค้ามากว่า 10 ปี</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <!-- ใส่รูปภาพสมาชิกทีม -->
+                        รูปภาพพนักงาน
+                    </div>
+                    <h3>คุณสุนิสา วัฒนา</h3>
+                    <div class="position">หัวหน้าฝ่ายบริการลูกค้า</div>
+                    <p>พร้อมให้คำแนะนำและแก้ไขปัญหาให้ลูกค้าทุกท่านด้วยความยินดี</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <!-- ใส่รูปภาพสมาชิกทีม -->
+                        รูปภาพพนักงาน
+                    </div>
+                    <h3>คุณธนภัทร สุขใจ</h3>
+                    <div class="position">ผู้เชี่ยวชาญด้านรถยนต์</div>
+                    <p>ตรวจสอบและดูแลสภาพรถทุกคันให้พร้อมใช้งานอย่างปลอดภัย</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>ติดต่อเรา</h2>
+                    <p>เรายินดีให้คำปรึกษาและบริการทุกวัน ตั้งแต่ 08:00 - 20:00 น.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>ที่อยู่</h3>
+                                <!-- ใส่ที่อยู่จาก Facebook ของคุณที่นี่ -->
+                                <p>123 ถนนรัชดาภิเษก แขวงดินแดง เขตดินแดง กรุงเทพมหานคร 10400</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>โทรศัพท์</h3>
+                                <!-- ใส่เบอร์โทรจาก Facebook ของคุณที่นี่ -->
+                                <p>02-123-4567</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>อีเมล</h3>
+                                <!-- ใส่อีเมลจาก Facebook ของคุณที่นี่ -->
+                                <p>info@carrent.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>เวลาทำการ</h3>
+                                <p>ทุกวัน 08:00 - 20:00 น.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <!-- ใส่ลิงก์ Facebook ของคุณที่นี่ -->
+                        <a href="https://web.facebook.com/profile.php?id=61571914394128" class="social-link" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-line"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h2>ส่งข้อความถึงเรา</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">ชื่อ-นามสกุล</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">อีเมล</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">โทรศัพท์</label>
+                            <input type="tel" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">หัวข้อ</label>
+                            <input type="text" id="subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">ข้อความ</label>
+                            <textarea id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">ส่งข้อความ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>BM Carrental Chiangrai</h3>
+                    <p>บริการเช่ารถยนต์คุณภาพสูง พร้อมบริการที่รวดเร็วและราคาที่เป็นธรรม</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>ลิงก์ด่วน</h3>
+                    <ul>
+                        <li><a href="index.html">หน้าแรก</a></li>
+                        <li><a href="carrental.html">รถทั้งหมด</a></li>
+                        <li><a href="serve.html">บริการของเรา</a></li>
+                        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                        <li><a href="contact.html">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ข้อมูลเพิ่มเติม</h3>
+                    <ul>
+                        <li><a href="#">คำถามที่พบบ่อย</a></li>
+                        <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#">วิธีการชำระเงิน</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ติดต่อเรา</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 02-123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@carrent.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 ถนนรัชดาภิเษก กรุงเทพฯ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BM Carrental Chiangrai. สงวนลิขสิทธิ์ทุกประการ.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

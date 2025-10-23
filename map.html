@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แผนที่บริการ - BM Carrental Chiangrai</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .logo span {
+            color: #ff6b00;
+        }
+        
+        .back-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-btn:hover {
+            background-color: #0d62d9;
+        }
+        
+        .map-container {
+            position: relative;
+            height: calc(100vh - 80px);
+            width: 100%;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .map-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            max-width: 300px;
+            z-index: 1000;
+        }
+        
+        .map-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-width: 250px;
+        }
+        
+        .control-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 2px;
+            transition: background-color 0.3s;
+        }
+        
+        .control-btn:hover {
+            background: #0d62d9;
+        }
+        
+        .control-btn.danger {
+            background: #ff4444;
+        }
+        
+        .control-btn.danger:hover {
+            background: #cc3333;
+        }
+        
+        .marker-count {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        /* เพิ่ม CSS สำหรับวงกลมบริการ */
+        .service-area-hint {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(26, 115, 232, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 1000;
+            max-width: 200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .service-area-hint i {
+            margin-right: 8px;
+            color: #ffd700;
+        }
+        
+        .map-info h3 {
+            margin: 0 0 10px 0;
+            color: #1a73e8;
+            font-size: 18px;
+        }
+        
+        .map-info p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .radius-info {
+            background: linear-gradient(135deg, #1a73e8 0%, #0d62d9 100%);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+        }
+        
+        .loading i {
+            color: #1a73e8;
+            font-size: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff4444;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 1001;
+        }
+        
+        @media (max-width: 768px) {
+            .map-info {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin: 20px;
+                max-width: none;
+            }
+            
+            .map-container {
+                height: calc(100vh - 140px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-container">
+            <div class="logo">BM <span>Carrental Chiangrai</span></div>
+            <a href="index.html" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                กลับหน้าหลัก
+            </a>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div class="map-container">
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <i class="fa-solid fa-spinner"></i>
+            <p>กำลังโหลดแผนที่...</p>
+        </div>
+        
+        <!-- Error Message -->
+        <div class="error-message" id="error-message" style="display: none;">
+            <i class="fa-solid fa-exclamation-triangle"></i>
+            <p>ไม่สามารถโหลดแผนที่ได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต</p>
+        </div>
+        
+        <!-- Map Info -->
+        <div class="map-info">
+            <h3><i class="fa-solid fa-map-marker-alt"></i> พื้นที่ให้บริการ</h3>
+            <p><strong>ศูนย์กลาง:</strong> สนามบินเชียงราย</p>
+            <p><strong>พิกัด:</strong> 19.9429572, 99.8125674</p>
+            <div class="radius-info">
+                <i class="fa-solid fa-circle"></i> รัศมีบริการ 20 กิโลเมตร
+            </div>
+        </div>
+        
+        <!-- Service Area Hint -->
+        <div class="service-area-hint" id="service-hint">
+            <i class="fa-solid fa-mouse-pointer"></i>
+            คลิกในวงกลมสีฟ้าเพื่อปักหมุดจุดรับ-ส่งรถ
+        </div>
+        
+        <!-- Map Controls -->
+        <div class="map-controls">
+            <div class="marker-count" id="marker-count">
+                <i class="fa-solid fa-car"></i> จุดรับ-ส่งรถ: 0
+            </div>
+            <button class="control-btn" onclick="clearAllMarkers()">
+                <i class="fa-solid fa-trash"></i> ลบจุดรับ-ส่งรถ
+            </button>
+            <button class="control-btn" onclick="toggleServiceArea()">
+                <i class="fa-solid fa-eye"></i> ซ่อน/แสดงพื้นที่บริการ
+            </button>
+            <button class="control-btn" onclick="centerMap()">
+                <i class="fa-solid fa-crosshairs"></i> กลับสู่ศูนย์กลาง
+            </button>
+        </div>
+        
+        <!-- Google Map -->
+        <div id="map"></div>
+    </div>
+
+    <!-- Google Maps API -->
+    <script>
+        // กำหนดตำแหน่งศูนย์กลาง (สนามบินเชียงราย)
+        const centerLocation = {
+            lat: 19.9429572,
+            lng: 99.8125674
+        };
+        
+        // ฟังก์ชันตรวจสอบระยะทาง
+        function isWithinServiceRadius(location) {
+            const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                new google.maps.LatLng(centerLocation.lat, centerLocation.lng),
+                new google.maps.LatLng(location.lat, location.lng)
+            );
+            return distance <= 20000; // 20 กิโลเมตร = 20,000 เมตร
+        }
+        
+        // ฟังก์ชันแสดงข้อความแจ้งเตือน
+        function showNotification(message, type = 'error') {
+            // สร้าง notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#ff4444' : '#28a745'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-family: 'Kanit', sans-serif;
+                font-size: 14px;
+                max-width: 300px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-${type === 'error' ? 'exclamation-triangle' : 'check-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            // เพิ่ม CSS animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // ลบ notification หลัง 3 วินาที
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // ฟังก์ชันเริ่มต้นแผนที่
+        function initMap() {
+            try {
+                // ซ่อน loading
+                document.getElementById('loading').style.display = 'none';
+                
+                // สร้างแผนที่
+                const map = new google.maps.Map(document.getElementById('map'), {
+                    center: centerLocation,
+                    zoom: 11, // ระดับซูมที่เหมาะสมสำหรับแสดงรัศมี 20km
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    styles: [
+                        {
+                            featureType: 'poi',
+                            elementType: 'labels',
+                            stylers: [{ visibility: 'on' }]
+                        }
+                    ]
+                });
+                
+                // สร้าง marker ที่ศูนย์กลาง
+                const centerMarker = new google.maps.Marker({
+                    position: centerLocation,
+                    map: map,
+                    title: 'BM Carrental Chiangrai - ศูนย์กลางบริการ',
+                    icon: {
+                        url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        `),
+                        scaledSize: new google.maps.Size(40, 40),
+                        anchor: new google.maps.Point(20, 20)
+                    }
+                });
+                
+                // สร้างวงกลมรัศมี 20 กิโลเมตร
+                const serviceCircle = new google.maps.Circle({
+                    strokeColor: '#1a73e8',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#1a73e8',
+                    fillOpacity: 0.15,
+                    map: map,
+                    center: centerLocation,
+                    radius: 20000, // 20 กิโลเมตร = 20,000 เมตร
+                    clickable: true, // ให้คลิกได้
+                    cursor: 'crosshair' // เปลี่ยน cursor เป็น crosshair เมื่อ hover
+                });
+                
+                // สร้าง InfoWindow สำหรับ marker
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="padding: 10px; font-family: 'Kanit', sans-serif;">
+                            <h3 style="margin: 0 0 8px 0; color: #1a73e8;">BM Carrental Chiangrai</h3>
+                            <p style="margin: 0 0 5px 0; font-size: 14px;"><strong>ศูนย์กลางบริการ</strong></p>
+                            <p style="margin: 0 0 5px 0; font-size: 13px;">สนามบินเชียงราย</p>
+                            <p style="margin: 0; font-size: 12px; color: #666;">รัศมีบริการ: 20 กิโลเมตร</p>
+                        </div>
+                    `
+                });
+                
+                // เพิ่ม event listener สำหรับ marker
+                centerMarker.addListener('click', function() {
+                    infoWindow.open(map, centerMarker);
+                });
+                
+                // เพิ่ม event listener สำหรับการคลิกแผนที่เพื่อปักหมุด
+                let userMarkers = []; // เก็บ markers ที่ผู้ใช้สร้าง
+                
+                // เพิ่ม event listener สำหรับการคลิกในวงกลมบริการ
+                serviceCircle.addListener('click', function(event) {
+                    const clickedLocation = {
+                        lat: event.latLng.lat(),
+                        lng: event.latLng.lng()
+                    };
+                    
+                    // ลบหมุดเก่าถ้ามี (ให้มีได้เพียงอันเดียว)
+                    if (userMarkers.length > 0) {
+                        userMarkers.forEach(item => {
+                            item.marker.setMap(null);
+                            item.infoWindow.close();
+                        });
+                        userMarkers = [];
+                    }
+                    
+                    // สร้าง marker สำหรับจุดรับ-ส่งรถ
+                        const newMarker = new google.maps.Marker({
+                            position: clickedLocation,
+                            map: map,
+                            title: 'จุดรับ-ส่งรถ',
+                            icon: {
+                                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                        <path d="M8 10h8"/>
+                                        <path d="M10 8v4"/>
+                                        <path d="M14 8v4"/>
+                                    </svg>
+                                `),
+                                scaledSize: new google.maps.Size(40, 50),
+                                anchor: new google.maps.Point(20, 50)
+                            }
+                        });
+                        
+                        // สร้าง InfoWindow สำหรับจุดรับ-ส่งรถ
+                        const newInfoWindow = new google.maps.InfoWindow({
+                            content: `
+                                <div style="padding: 12px; font-family: 'Kanit', sans-serif; min-width: 200px;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                        <i class="fa-solid fa-car" style="color: #1a73e8; margin-right: 8px; font-size: 16px;"></i>
+                                        <h3 style="margin: 0; color: #1a73e8; font-size: 16px;">จุดรับ-ส่งรถ</h3>
+                                    </div>
+                                    <p style="margin: 0 0 5px 0; font-size: 13px; color: #333;">
+                                        <strong>พิกัด:</strong> ${clickedLocation.lat.toFixed(6)}, ${clickedLocation.lng.toFixed(6)}
+                                    </p>
+                                    <p style="margin: 0 0 8px 0; font-size: 12px; color: #28a745;">
+                                        <i class="fa-solid fa-check-circle"></i> อยู่ในพื้นที่ให้บริการ
+                                    </p>
+                                    <div style="display: flex; gap: 5px;">
+                                        <button onclick="removeMarker(${userMarkers.length})" style="flex: 1; padding: 6px 8px; background: #ff4444; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">
+                                            <i class="fa-solid fa-trash"></i> ลบ
+                                        </button>
+                                        <button onclick="setAsPickupPoint(${userMarkers.length})" style="flex: 1; padding: 6px 8px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">
+                                            <i class="fa-solid fa-flag"></i> รับรถ
+                                        </button>
+                                        <button onclick="setAsReturnPoint(${userMarkers.length})" style="flex: 1; padding: 6px 8px; background: #ff6b00; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">
+                                            <i class="fa-solid fa-flag-checkered"></i> คืนรถ
+                                        </button>
+                                    </div>
+                                </div>
+                            `
+                        });
+                        
+                        // เพิ่ม event listener สำหรับ marker ใหม่
+                        newMarker.addListener('click', function() {
+                            newInfoWindow.open(map, newMarker);
+                        });
+                        
+                        // เก็บ marker ไว้ใน array
+                        userMarkers.push({
+                            marker: newMarker,
+                            infoWindow: newInfoWindow
+                        });
+                        
+                        // อัปเดตจำนวนหมุด
+                        updateMarkerCount();
+                        
+                        // ซ่อน hint เมื่อปักหมุดแล้ว
+                        const serviceHint = document.getElementById('service-hint');
+                        if (serviceHint) {
+                            serviceHint.style.display = 'none';
+                        }
+                        
+                        // แสดงข้อความยืนยัน
+                        showNotification('ย้ายจุดรับ-ส่งรถสำเร็จ! ตำแหน่งอยู่ในพื้นที่ให้บริการ', 'success');
+                });
+                
+                // ฟังก์ชันลบ marker
+                window.removeMarker = function(index) {
+                    if (userMarkers[index]) {
+                        userMarkers[index].marker.setMap(null);
+                        userMarkers[index].infoWindow.close();
+                        userMarkers.splice(index, 1);
+                        updateMarkerCount();
+                        showNotification('ลบจุดรับ-ส่งรถเรียบร้อยแล้ว', 'success');
+                    }
+                };
+                
+                // ฟังก์ชันอัปเดตจำนวนจุดรับ-ส่งรถ
+                function updateMarkerCount() {
+                    document.getElementById('marker-count').innerHTML = 
+                        `<i class="fa-solid fa-car"></i> จุดรับ-ส่งรถ: ${userMarkers.length}`;
+                }
+                
+                // ฟังก์ชันลบจุดรับ-ส่งรถ
+                window.clearAllMarkers = function() {
+                    if (userMarkers.length === 0) {
+                        showNotification('ไม่มีจุดรับ-ส่งรถให้ลบ', 'error');
+                        return;
+                    }
+                    
+                    userMarkers.forEach(item => {
+                        item.marker.setMap(null);
+                        item.infoWindow.close();
+                    });
+                    userMarkers = [];
+                    updateMarkerCount();
+                    
+                    // แสดง hint กลับเมื่อลบหมุด
+                    const serviceHint = document.getElementById('service-hint');
+                    if (serviceHint) {
+                        serviceHint.style.display = 'block';
+                    }
+                    
+                    showNotification('ลบจุดรับ-ส่งรถเรียบร้อยแล้ว', 'success');
+                };
+                
+                // ฟังก์ชันซ่อน/แสดงพื้นที่บริการ
+                let serviceAreaVisible = true;
+                window.toggleServiceArea = function() {
+                    if (serviceAreaVisible) {
+                        serviceCircle.setMap(null);
+                        serviceAreaVisible = false;
+                        showNotification('ซ่อนพื้นที่บริการแล้ว', 'success');
+                    } else {
+                        serviceCircle.setMap(map);
+                        serviceAreaVisible = true;
+                        showNotification('แสดงพื้นที่บริการแล้ว', 'success');
+                    }
+                };
+                
+                // ฟังก์ชันกลับสู่ศูนย์กลาง
+                window.centerMap = function() {
+                    map.setCenter(centerLocation);
+                    map.setZoom(11);
+                    showNotification('กลับสู่ศูนย์กลางแล้ว', 'success');
+                };
+                
+                // ฟังก์ชันตั้งเป็นจุดรับรถ
+                window.setAsPickupPoint = function(index) {
+                    if (userMarkers[index]) {
+                        const marker = userMarkers[index];
+                        // เปลี่ยนสี marker เป็นสีเขียว (รับรถ)
+                        marker.marker.setIcon({
+                            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                    <path d="M8 10h8"/>
+                                    <path d="M10 8v4"/>
+                                    <path d="M14 8v4"/>
+                                    <text x="12" y="18" text-anchor="middle" font-size="8" fill="#28a745">รับ</text>
+                                </svg>
+                            `),
+                            scaledSize: new google.maps.Size(40, 50),
+                            anchor: new google.maps.Point(20, 50)
+                        });
+                        marker.marker.setTitle('จุดรับรถ');
+                        showNotification('ตั้งเป็นจุดรับรถแล้ว', 'success');
+                    }
+                };
+                
+                // ฟังก์ชันตั้งเป็นจุดคืนรถ
+                window.setAsReturnPoint = function(index) {
+                    if (userMarkers[index]) {
+                        const marker = userMarkers[index];
+                        // เปลี่ยนสี marker เป็นสีส้ม (คืนรถ)
+                        marker.marker.setIcon({
+                            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                    <path d="M8 10h8"/>
+                                    <path d="M10 8v4"/>
+                                    <path d="M14 8v4"/>
+                                    <text x="12" y="18" text-anchor="middle" font-size="8" fill="#ff6b00">คืน</text>
+                                </svg>
+                            `),
+                            scaledSize: new google.maps.Size(40, 50),
+                            anchor: new google.maps.Point(20, 50)
+                        });
+                        marker.marker.setTitle('จุดคืนรถ');
+                        showNotification('ตั้งเป็นจุดคืนรถแล้ว', 'success');
+                    }
+                };
+                
+                // เพิ่ม marker สำคัญในพื้นที่
+                const importantLocations = [
+                    {
+                        name: 'สนามบินเชียงราย',
+                        position: { lat: 19.9429572, lng: 99.8125674 },
+                        type: 'airport'
+                    },
+                    {
+                        name: 'ขนส่งเก่า',
+                        position: { lat: 19.9200, lng: 99.8300 },
+                        type: 'bus_station'
+                    },
+                    {
+                        name: 'ขนส่งใหม่',
+                        position: { lat: 19.9600, lng: 99.7900 },
+                        type: 'bus_station'
+                    },
+                    {
+                        name: 'ตัวเมืองเชียงราย',
+                        position: { lat: 19.9100, lng: 99.8400 },
+                        type: 'city'
+                    }
+                ];
+                
+                // เพิ่ม markers สำหรับสถานที่สำคัญ
+                importantLocations.forEach(location => {
+                    let iconColor = '#1a73e8';
+                    let iconSymbol = '📍';
+                    
+                    if (location.type === 'airport') {
+                        iconColor = '#ff6b00';
+                        iconSymbol = '✈️';
+                    } else if (location.type === 'bus_station') {
+                        iconColor = '#28a745';
+                        iconSymbol = '🚌';
+                    } else if (location.type === 'city') {
+                        iconColor = '#6c757d';
+                        iconSymbol = '🏙️';
+                    }
+                    
+                    const marker = new google.maps.Marker({
+                        position: location.position,
+                        map: map,
+                        title: location.name,
+                        icon: {
+                            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <text x="12" y="16" text-anchor="middle" font-size="12">${iconSymbol}</text>
+                                </svg>
+                            `),
+                            scaledSize: new google.maps.Size(30, 30),
+                            anchor: new google.maps.Point(15, 15)
+                        }
+                    });
+                    
+                    // เพิ่ม InfoWindow สำหรับแต่ละ marker
+                    const locationInfoWindow = new google.maps.InfoWindow({
+                        content: `
+                            <div style="padding: 8px; font-family: 'Kanit', sans-serif;">
+                                <h4 style="margin: 0 0 5px 0; color: ${iconColor};">${location.name}</h4>
+                                <p style="margin: 0; font-size: 12px; color: #666;">${iconSymbol} ${location.type === 'airport' ? 'สนามบิน' : location.type === 'bus_station' ? 'สถานีขนส่ง' : 'ตัวเมือง'}</p>
+                            </div>
+                        `
+                    });
+                    
+                    marker.addListener('click', function() {
+                        locationInfoWindow.open(map, marker);
+                    });
+                });
+                
+                console.log('แผนที่โหลดสำเร็จ');
+                
+            } catch (error) {
+                console.error('เกิดข้อผิดพลาดในการโหลดแผนที่:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error-message').style.display = 'block';
+            }
+        }
+        
+        // ฟังก์ชันจัดการข้อผิดพลาด
+        function handleMapError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error-message').style.display = 'block';
+        }
+        
+        // เรียกใช้ฟังก์ชันเมื่อโหลดหน้าเว็บเสร็จ
+        window.onload = function() {
+            // ตรวจสอบว่า Google Maps API โหลดสำเร็จหรือไม่
+            if (typeof google === 'undefined' || !google.maps) {
+                handleMapError();
+                return;
+            }
+            
+            // รอสักครู่เพื่อให้ API โหลดเสร็จสมบูรณ์
+            setTimeout(initMap, 500);
+        };
+        
+        // จัดการข้อผิดพลาดของ Google Maps API
+        window.gm_authFailure = function() {
+            handleMapError();
+        };
+    </script>
+    
+    <!-- Google Maps API Script -->
+    <script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIKuqh9a8lAus3a82Sf0zD2ZJLM-htB48&callback=initMap&libraries=geometry"
+        onerror="handleMapError()">
+    </script>
+</body>
+</html>

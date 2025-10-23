@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>บริการของเรา - BM Carrental Chiangrai</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .logo span {
+            color: #ff6b00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #1a73e8;
+        }
+        
+        .auth-buttons {
+            display: flex;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid #1a73e8;
+            color: #1a73e8;
+            margin-right: 10px;
+        }
+        
+        .btn-register {
+            background-color: #1a73e8;
+            border: 1px solid #1a73e8;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .btn-register:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+        }
+        
+        .breadcrumb li {
+            margin-right: 10px;
+        }
+        
+        .breadcrumb li:not(:last-child):after {
+            content: ">";
+            margin-left: 10px;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            height: 120px;
+            background-color: #1a73e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+        }
+        
+        .service-content {
+            padding: 30px;
+        }
+        
+        .service-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .service-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .service-features li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .service-features li i {
+            color: #1a73e8;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .btn-service {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-service:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Why Choose Us Section */
+        .why-choose-us {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feature-card p {
+            color: #666;
+        }
+        
+        /* Process Section */
+        .process {
+            padding: 80px 0;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .step h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .step p {
+            color: #666;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .author-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .faq-answer.active {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(rgba(26, 115, 232, 0.9), rgba(26, 115, 232, 0.9)), url('imger.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn-cta {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #ff6b00;
+            color: white;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-cta:hover {
+            background-color: #e55c00;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #1a73e8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 15px 0;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+            
+            .step {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">BM <span>Carrental Chiangrai</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="carrental.html">รถทั้งหมด</a></li>
+                    <li><a href="serve.html" class="active">บริการของเรา</a></li>
+                    <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                    <li><a href="contact.html">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-login">เข้าสู่ระบบ</a>
+                <a href="#" class="btn btn-register">สมัครสมาชิก</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>บริการของเรา</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">หน้าแรก</a></li>
+                <li>บริการของเรา</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>บริการเช่ารถครบวงจร</h2>
+                <p>เรามอบบริการเช่ารถที่หลากหลายเพื่อตอบโจทย์ความต้องการทุกประเภท</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>เช่ารถระยะสั้น</h3>
+                        <p>บริการเช่ารถรายวัน เหมาะสำหรับการเดินทางระยะสั้น การท่องเที่ยว หรือการใช้รถชั่วคราว</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> เช่ารายวัน รายสัปดาห์</li>
+                            <li><i class="fas fa-check"></i> รถใหม่สะอาด พร้อมใช้งาน</li>
+                            <li><i class="fas fa-check"></i> ประกันภัยครบถ้วน</li>
+                            <li><i class="fas fa-check"></i> บริการรับ-ส่งรถฟรี</li>
+                        </ul>
+                        <a href="#" class="btn-service">ดูรายละเอียด</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>เช่ารถระยะยาว</h3>
+                        <p>บริการเช่ารถรายเดือนหรือรายปี สำหรับบริษัทหรือบุคคลที่ต้องการใช้รถต่อเนื่อง</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> เช่ารายเดือน รายปี</li>
+                            <li><i class="fas fa-check"></i> ราคาพิเศษสำหรับลูกค้าระยะยาว</li>
+                            <li><i class="fas fa-check"></i> บริการบำรุงรักษาตามระยะ</li>
+                            <li><i class="fas fa-check"></i> สามารถเปลี่ยนรถได้ตามต้องการ</li>
+                        </ul>
+                        <a href="#" class="btn-service">ดูรายละเอียด</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shuttle-van"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>บริการรถตู้</h3>
+                        <p>บริการรถตู้สำหรับกลุ่มท่องเที่ยว รับส่งพนักงาน หรือเดินทางเป็นกลุ่ม</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> รถตู้ใหม่ สะอาด ปลอดภัย</li>
+                            <li><i class="fas fa-check"></i> พร้อมคนขับมืออาชีพ</li>
+                            <li><i class="fas fa-check"></i> ความจุ 9-15 ที่นั่ง</li>
+                            <li><i class="fas fa-check"></i> เหมาะสำหรับทริปท่องเที่ยว</li>
+                        </ul>
+                        <a href="#" class="btn-service">ดูรายละเอียด</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>รถหรูสำหรับโอกาสพิเศษ</h3>
+                        <p>บริการรถหรูสำหรับงานแต่งงาน งานรับรอง หรือโอกาสพิเศษต่างๆ</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> รถหรูระดับ Premium</li>
+                            <li><i class="fas fa-check"></i> พร้อมคนขับในเครื่องแบบ</li>
+                            <li><i class="fas fa-check"></i> บริการระดับพรีเมียม</li>
+                            <li><i class="fas fa-check"></i> ตกแต่งรถตามโอกาส</li>
+                        </ul>
+                        <a href="#" class="btn-service">ดูรายละเอียด</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>บริการรับ-ส่งสนามบิน</h3>
+                        <p>บริการรับ-ส่งสนามบินด้วยรถยนต์ที่สะอาดและปลอดภัย พร้อมคนขับมืออาชีพ</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> รับ-ส่งตรงเวลามาตรฐาน</li>
+                            <li><i class="fas fa-check"></i> ติดตามเที่ยวบินออนไลน์</li>
+                            <li><i class="fas fa-check"></i> ช่วยเหลือเรื่องสัมภาระ</li>
+                            <li><i class="fas fa-check"></i> ราคาคงที่ ไม่มีค่าพิเศษ</li>
+                        </ul>
+                        <a href="#" class="btn-service">ดูรายละเอียด</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>บริการรถสำหรับบริษัท</h3>
+                        <p>ให้เช่ารถสำหรับบริษัท พร้อมใบเสร็จและบริการที่ออกแบบตามความต้องการ</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> บริการสำหรับองค์กร</li>
+                            <li><i class="fas fa-check"></i> ออกใบเสร็จ/ใบกำกับภาษี</li>
+                            <li><i class="fas fa-check"></i> รายงานการใช้รถประจำเดือน</li>
+                            <li><i class="fas fa-check"></i> ส่วนลดพิเศษสำหรับบริษัท</li>
+                        </ul>
+                        <a href="#" class="btn-service">ดูรายละเอียด</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+        <div class="container">
+            <div class="section-title">
+                <h2>ทำไมต้องเลือกเรา</h2>
+                <p>เราให้ความสำคัญกับความพึงพอใจของลูกค้าเป็นอันดับแรก</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚗</div>
+                    <h3>รถใหม่สะอาด</h3>
+                    <p>รถทุกคันเป็นรุ่นใหม่ล่าสุด ผ่านการทำความสะอาดและตรวจสอบก่อนส่งมอบ</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>ราคาที่เหมาะสม</h3>
+                    <p>เราเสนอราคาที่แข่งขันได้และโปรโมชั่นพิเศษสำหรับลูกค้าทุกท่าน</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3>บริการตลอด 24 ชม.</h3>
+                    <p>ทีมงานพร้อมให้บริการและช่วยเหลือคุณตลอด 24 ชั่วโมง</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>ประกันภัยครบวงจร</h3>
+                    <p>รถทุกคันมีประกันภัยครอบคลุม ให้คุณมั่นใจทุกการเดินทาง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process">
+        <div class="container">
+            <div class="section-title">
+                <h2>ขั้นตอนการเช่ารถ</h2>
+                <p>เพียง 4 ขั้นตอนง่ายๆ คุณก็ได้รถเช่าที่ต้องการ</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>เลือกรถและวันที่</h3>
+                    <p>เลือกรถและวันที่ต้องการเช่าจากระบบของเรา</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>ยืนยันการจอง</h3>
+                    <p>กรอกข้อมูลและยืนยันการจองรถ</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>ชำระเงิน</h3>
+                    <p>ชำระเงินผ่านช่องทางที่คุณสะดวก</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>รับรถ</h3>
+                    <p>มารับรถที่สาขาในวันที่นัดหมาย</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>ความประทับใจจากลูกค้า</h2>
+                <p>ลูกค้าของเราเชื่อใจและพึงพอใจในบริการของเรา</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "บริการดีมาก รถใหม่สะอาด ได้รับรถตรงเวลา พนักงานบริการเป็นกันเอง ราคาก็สมเหตุสมผล จะใช้บริการอีกแน่นอน"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>คุณสมชาย ใจดี</h4>
+                            <p>ลูกค้าเช่ารถระยะสั้น</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "ใช้บริการเช่ารถระยะยาวสำหรับบริษัทมาหลายปีแล้ว บริการดี รถใหม่ตลอด ไม่มีปัญหาเรื่องการใช้งานเลย"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>คุณสุนิสา วัฒนา</h4>
+                            <p>ผู้จัดการบริษัท ABC</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "บริการรับส่งสนามบินดีมาก คนขับมาถึงก่อนเวลา ช่วยขนกระเป๋าให้ด้วย ครั้งหน้าจะใช้บริการอีกแน่นอน"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>คุณธนภัทร สุขใจ</h4>
+                            <p>ลูกค้าบริการรับส่งสนามบิน</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>คำถามที่พบบ่อย</h2>
+                <p>เรารวบรวมคำถามที่ลูกค้ามักสงสัยไว้ที่นี่</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ต้องมีอายุเท่าไหร่ถึงจะเช่ารถได้?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ผู้เช่าต้องมีอายุไม่ต่ำกว่า 21 ปี และมีใบขับขี่ที่ยังไม่หมดอายุ</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ต้องจองล่วงหน้าก่อนกี่วัน?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>สามารถจองล่วงหน้าได้ตั้งแต่ 1 วันขึ้นไป เพื่อความมั่นใจในความพร้อมของรถ</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>สามารถชำระเงินด้วยวิธีใดได้บ้าง?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>เรารองรับการชำระเงินด้วยเงินสด บัตรเครดิต/เดบิต หรือการโอนเงินผ่านธนาคาร</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>มีบริการรับส่งรถหรือไม่?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>เรามีบริการรับส่งรถฟรีในรัศมี 10 กม. จากสาขา สำหรับลูกค้าที่เช่ารถตั้งแต่ 3 วันขึ้นไป</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>หากเกิดอุบัติเหตุต้องทำอย่างไร?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>กรุณาติดต่อเราโดยด่วนที่เบอร์ฉุกเฉิน 02-123-4567 เรามีทีมงานพร้อมให้ความช่วยเหลือตลอด 24 ชั่วโมง</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>พร้อมให้บริการคุณแล้ววันนี้</h2>
+            <p>ไม่ว่าคุณจะต้องการรถสำหรับการเดินทางในเมือง ท่องเที่ยว หรือใช้ในธุรกิจ เรามีรถที่เหมาะกับคุณ</p>
+            <a href="carrental.html" class="btn-cta">ค้นหารถที่ต้องการ</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>BM Carrental Chiangrai</h3>
+                    <p>บริการเช่ารถยนต์คุณภาพสูง พร้อมบริการที่รวดเร็วและราคาที่เป็นธรรม</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>ลิงก์ด่วน</h3>
+                    <ul>
+                        <li><a href="index.html">หน้าแรก</a></li>
+                        <li><a href="carrental.html">รถทั้งหมด</a></li>
+                        <li><a href="serve.html">บริการของเรา</a></li>
+                        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                        <li><a href="contact.html">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ข้อมูลเพิ่มเติม</h3>
+                    <ul>
+                        <li><a href="#">คำถามที่พบบ่อย</a></li>
+                        <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#">วิธีการชำระเงิน</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ติดต่อเรา</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 02-123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@carrent.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 ถนนรัชดาภิเษก กรุงเทพฯ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BM Carrental Chiangrai. สงวนลิขสิทธิ์ทุกประการ.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+                
+                const icon = question.querySelector('i');
+                if (answer.classList.contains('active')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

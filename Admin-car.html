@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการรถ | CarRent Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #1a1a1a;
+            color: white;
+            transition: all 0.3s;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background-color: #1a73e8;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        .sidebar-header .logo span {
+            color: #ff6b00;
+        }
+        
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: #333;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .submenu {
+            background-color: #222;
+            display: none;
+        }
+        
+        .submenu.active {
+            display: block;
+        }
+        
+        .submenu-item {
+            padding: 10px 20px 10px 50px;
+            transition: all 0.3s;
+        }
+        
+        .submenu-item:hover {
+            background-color: #2a2a2a;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background-color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .toggle-sidebar {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 30px;
+        }
+        
+        .page-title {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .page-title h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #1a73e8;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0d62d9;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        /* Filters */
+        .filters {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-group {
+            flex: 1;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-header h2 {
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .card-body {
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background-color: #e8f5e9;
+            color: #28a745;
+        }
+        
+        .badge-warning {
+            background-color: #fff3e0;
+            color: #ff6b00;
+        }
+        
+        .badge-danger {
+            background-color: #ffebee;
+            color: #dc3545;
+        }
+        
+        .badge-info {
+            background-color: #e3f2fd;
+            color: #1a73e8;
+        }
+        
+        .badge-secondary {
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* Car Grid View */
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .car-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .car-image {
+            height: 160px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .car-info {
+            padding: 15px;
+        }
+        
+        .car-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .car-details {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .car-price {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+        
+        .car-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 20px;
+            color: #333;
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid #1a73e8;
+            color: #1a73e8;
+            font-weight: 500;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            background-color: white;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        
+        .view-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            background-color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .view-option.active {
+            background-color: #1a73e8;
+            color: white;
+        }
+        
+        /* Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        
+        .stat-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .stat-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .bg-blue {
+            background-color: #e3f2fd;
+            color: #1a73e8;
+        }
+        
+        .bg-green {
+            background-color: #e8f5e9;
+            color: #28a745;
+        }
+        
+        .bg-orange {
+            background-color: #fff3e0;
+            color: #ff6b00;
+        }
+        
+        .bg-red {
+            background-color: #ffebee;
+            color: #dc3545;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow: visible;
+            }
+            
+            .sidebar .menu-text, .sidebar-header .logo {
+                display: none;
+            }
+            
+            .menu-item {
+                justify-content: center;
+                padding: 15px;
+            }
+            
+            .menu-item i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .car-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">Car<span>Rent</span> <span class="menu-text">Admin</span></div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="menu-text">แดชบอร์ด</span>
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-car"></i>
+                <span class="menu-text">จัดการรถ</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-calendar-check"></i>
+                <span class="menu-text">จัดการการจอง</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">จัดการผู้ใช้</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span class="menu-text">การชำระเงิน</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span class="menu-text">ตั้งค่าระบบ</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="menu-text">ออกจากระบบ</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="toggle-sidebar">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="user-info">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=1a73e8&color=fff" alt="Admin User">
+                <span>ผู้ดูแลระบบ</span>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <div class="page-title">
+                <h1>จัดการรถ</h1>
+                <button class="btn btn-primary" id="addCarBtn">เพิ่มรถใหม่</button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon bg-blue">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>42</h3>
+                        <p>รถทั้งหมด</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>28</h3>
+                        <p>รถว่าง</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-orange">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>10</h3>
+                        <p>รถถูกเช่า</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-red">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>4</h3>
+                        <p>รถซ่อมบำรุง</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters and View Toggle -->
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>สถานะรถ</label>
+                        <select class="form-control" id="statusFilter">
+                            <option value="">ทั้งหมด</option>
+                            <option value="available">ว่าง</option>
+                            <option value="rented">ถูกเช่า</option>
+                            <option value="maintenance">ซ่อมบำรุง</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>ประเภทรถ</label>
+                        <select class="form-control" id="typeFilter">
+                            <option value="">ทั้งหมด</option>
+                            <option value="sedan">รถเก๋ง</option>
+                            <option value="suv">รถ SUV</option>
+                            <option value="truck">รถกระบะ</option>
+                            <option value="van">รถตู้</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>ค้นหารุ่นหรือยี่ห้อ</label>
+                        <input type="text" class="form-control" id="searchFilter" placeholder="กรอกรุ่นหรือยี่ห้อรถ">
+                    </div>
+                </div>
+                <div class="filter-row" style="justify-content: space-between;">
+                    <div>
+                        <button class="btn btn-primary" id="applyFilters">ใช้ตัวกรอง</button>
+                        <button class="btn" id="resetFilters">รีเซ็ตตัวกรอง</button>
+                    </div>
+                    <div class="view-toggle">
+                        <div class="view-option active" id="tableView">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <div class="view-option" id="gridView">
+                            <i class="fas fa-th"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="all-cars">รถทั้งหมด</div>
+                <div class="tab" data-tab="available-cars">รถว่าง</div>
+                <div class="tab" data-tab="rented-cars">รถถูกเช่า</div>
+                <div class="tab" data-tab="maintenance-cars">รถซ่อมบำรุง</div>
+            </div>
+
+            <!-- Table View -->
+            <div class="card tab-content active" id="all-cars">
+                <div class="card-header">
+                    <h2>รถทั้งหมด</h2>
+                    <div>
+                        <button class="btn btn-primary">ส่งออกรายงาน</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>รหัสรถ</th>
+                                <th>ภาพ</th>
+                                <th>ยี่ห้อ/รุ่น</th>
+                                <th>ประเภท</th>
+                                <th>ปี</th>
+                                <th>ราคา/วัน</th>
+                                <th>สถานะ</th>
+                                <th>การดำเนินการ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CR001</td>
+                                <td>
+                                    <div style="width: 60px; height: 40px; background-color: #eee; border-radius: 4px;"></div>
+                                </td>
+                                <td>Toyota Hilux Revo</td>
+                                <td>รถกระบะ</td>
+                                <td>2023</td>
+                                <td>฿1,800</td>
+                                <td><span class="badge badge-success">ว่าง</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-car" data-id="CR001">ดู</button>
+                                    <button class="btn btn-success btn-sm edit-car" data-id="CR001">แก้ไข</button>
+                                    <button class="btn btn-danger btn-sm delete-car" data-id="CR001">ลบ</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>CR002</td>
+                                <td>
+                                    <div style="width: 60px; height: 40px; background-color: #eee; border-radius: 4px;"></div>
+                                </td>
+                                <td>Honda Civic</td>
+                                <td>รถเก๋ง</td>
+                                <td>2023</td>
+                                <td>฿1,600</td>
+                                <td><span class="badge badge-warning">ถูกเช่า</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-car" data-id="CR002">ดู</button>
+                                    <button class="btn btn-success btn-sm edit-car" data-id="CR002">แก้ไข</button>
+                                    <button class="btn btn-danger btn-sm delete-car" data-id="CR002">ลบ</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>CR003</td>
+                                <td>
+                                    <div style="width: 60px; height: 40px; background-color: #eee; border-radius: 4px;"></div>
+                                </td>
+                                <td>Mazda CX-5</td>
+                                <td>รถ SUV</td>
+                                <td>2023</td>
+                                <td>฿2,200</td>
+                                <td><span class="badge badge-success">ว่าง</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-car" data-id="CR003">ดู</button>
+                                    <button class="btn btn-success btn-sm edit-car" data-id="CR003">แก้ไข</button>
+                                    <button class="btn btn-danger btn-sm delete-car" data-id="CR003">ลบ</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>CR004</td>
+                                <td>
+                                    <div style="width: 60px; height: 40px; background-color: #eee; border-radius: 4px;"></div>
+                                </td>
+                                <td>Toyota Yaris</td>
+                                <td>รถเก๋ง</td>
+                                <td>2022</td>
+                                <td>฿1,200</td>
+                                <td><span class="badge badge-danger">ซ่อมบำรุง</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-car" data-id="CR004">ดู</button>
+                                    <button class="btn btn-success btn-sm edit-car" data-id="CR004">แก้ไข</button>
+                                    <button class="btn btn-danger btn-sm delete-car" data-id="CR004">ลบ</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Grid View -->
+            <div class="tab-content" id="grid-view">
+                <div class="car-grid">
+                    <div class="car-card">
+                        <div class="car-image">
+                            ภาพ Toyota Hilux Revo
+                        </div>
+                        <div class="car-info">
+                            <div class="car-title">Toyota Hilux Revo</div>
+                            <div class="car-details">รถกระบะ • 2023 • ดีเซล • อัตโนมัติ</div>
+                            <div class="car-price">฿1,800 / วัน</div>
+                            <div class="car-status">
+                                <span class="badge badge-success">ว่าง</span>
+                                <div class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-car" data-id="CR001">ดู</button>
+                                    <button class="btn btn-success btn-sm edit-car" data-id="CR001">แก้ไข</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <div class="car-image">
+                            ภาพ Honda Civic
+                        </div>
+                        <div class="car-info">
+                            <div class="car-title">Honda Civic</div>
+                            <div class="car-details">รถเก๋ง • 2023 • เบนซิน • อัตโนมัติ</div>
+                            <div class="car-price">฿1,600 / วัน</div>
+                            <div class="car-status">
+                                <span class="badge badge-warning">ถูกเช่า</span>
+                                <div class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-car" data-id="CR002">ดู</button>
+                                    <button class="btn btn-success btn-sm edit-car" data-id="CR002">แก้ไข</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <div class="car-image">
+                            ภาพ Mazda CX-5
+                        </div>
+                        <div class="car-info">
+                            <div class="car-title">Mazda CX-5</div>
+                            <div class="car-details">รถ SUV • 2023 • เบนซิน • อัตโนมัติ</div>
+                            <div class="car-price">฿2,200 / วัน</div>
+                            <div class="car-status">
+                                <span class="badge badge-success">ว่าง</span>
+                                <div class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-car" data-id="CR003">ดู</button>
+                                    <button class="btn btn-success btn-sm edit-car" data-id="CR003">แก้ไข</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <div class="car-image">
+                            ภาพ Toyota Yaris
+                        </div>
+                        <div class="car-info">
+                            <div class="car-title">Toyota Yaris</div>
+                            <div class="car-details">รถเก๋ง • 2022 • เบนซิน • อัตโนมัติ</div>
+                            <div class="car-price">฿1,200 / วัน</div>
+                            <div class="car-status">
+                                <span class="badge badge-danger">ซ่อมบำรุง</span>
+                                <div class="action-buttons">
+                                    <button class="btn btn-primary btn-sm view-car" data-id="CR004">ดู</button>
+                                    <button class="btn btn-success btn-sm edit-car" data-id="CR004">แก้ไข</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Car Modal -->
+    <div class="modal" id="carModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">เพิ่มรถใหม่</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="carForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="carBrand">ยี่ห้อ</label>
+                            <input type="text" class="form-control" id="carBrand" placeholder="กรอกยี่ห้อรถ" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carModel">รุ่น</label>
+                            <input type="text" class="form-control" id="carModel" placeholder="กรอกรุ่นรถ" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="carType">ประเภทรถ</label>
+                            <select class="form-control" id="carType" required>
+                                <option value="">เลือกประเภทรถ</option>
+                                <option value="sedan">รถเก๋ง</option>
+                                <option value="suv">รถ SUV</option>
+                                <option value="truck">รถกระบะ</option>
+                                <option value="van">รถตู้</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="carYear">ปี</label>
+                            <input type="number" class="form-control" id="carYear" min="2010" max="2024" value="2023" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="carFuel">เชื้อเพลิง</label>
+                            <select class="form-control" id="carFuel" required>
+                                <option value="">เลือกเชื้อเพลิง</option>
+                                <option value="gasoline">เบนซิน</option>
+                                <option value="diesel">ดีเซล</option>
+                                <option value="electric">ไฟฟ้า</option>
+                                <option value="hybrid">ไฮบริด</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="carTransmission">เกียร์</label>
+                            <select class="form-control" id="carTransmission" required>
+                                <option value="">เลือกเกียร์</option>
+                                <option value="automatic">อัตโนมัติ</option>
+                                <option value="manual">ธรรมดา</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="carSeats">จำนวนที่นั่ง</label>
+                            <input type="number" class="form-control" id="carSeats" min="2" max="10" value="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carDoors">จำนวนประตู</label>
+                            <input type="number" class="form-control" id="carDoors" min="2" max="6" value="4" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="carPrice">ราคา/วัน (บาท)</label>
+                            <input type="number" class="form-control" id="carPrice" min="0" step="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carStatus">สถานะ</label>
+                            <select class="form-control" id="carStatus" required>
+                                <option value="available">ว่าง</option>
+                                <option value="rented">ถูกเช่า</option>
+                                <option value="maintenance">ซ่อมบำรุง</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carDescription">รายละเอียดเพิ่มเติม</label>
+                        <textarea class="form-control" id="carDescription" rows="3" placeholder="กรอกรายละเอียดเพิ่มเติมเกี่ยวกับรถ"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>อัพโหลดภาพรถ</label>
+                        <input type="file" class="form-control" id="carImages" multiple accept="image/*">
+                    </div>
+                    
+                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <button type="button" class="btn" id="cancelBtn">ยกเลิก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+            document.querySelector('.main-content').classList.toggle('expanded');
+        });
+
+        // Tab Switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+            });
+        });
+
+        // View Toggle
+        const tableView = document.getElementById('tableView');
+        const gridView = document.getElementById('gridView');
+        const tableContentView = document.getElementById('all-cars');
+        const gridContentView = document.getElementById('grid-view');
+
+        tableView.addEventListener('click', function() {
+            tableView.classList.add('active');
+            gridView.classList.remove('active');
+            tableContentView.style.display = 'block';
+            gridContentView.style.display = 'none';
+        });
+
+        gridView.addEventListener('click', function() {
+            gridView.classList.add('active');
+            tableView.classList.remove('active');
+            gridContentView.style.display = 'block';
+            tableContentView.style.display = 'none';
+        });
+
+        // Car Modal
+        const modal = document.getElementById('carModal');
+        const closeModal = document.querySelector('.close-modal');
+        const addCarBtn = document.getElementById('addCarBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const viewCarButtons = document.querySelectorAll('.view-car');
+        const editCarButtons = document.querySelectorAll('.edit-car');
+        const deleteCarButtons = document.querySelectorAll('.delete-car');
+
+        addCarBtn.addEventListener('click', function() {
+            document.getElementById('modalTitle').textContent = 'เพิ่มรถใหม่';
+            modal.style.display = 'flex';
+        });
+
+        viewCarButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                document.getElementById('modalTitle').textContent = 'ดูรายละเอียดรถ';
+                // ในเว็บจริงควรโหลดข้อมูลรถจาก ID
+                modal.style.display = 'flex';
+            });
+        });
+
+        editCarButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                document.getElementById('modalTitle').textContent = 'แก้ไขข้อมูลรถ';
+                // ในเว็บจริงควรโหลดข้อมูลรถจาก ID และเติมในฟอร์ม
+                modal.style.display = 'flex';
+            });
+        });
+
+        deleteCarButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const carId = this.getAttribute('data-id');
+                if (confirm(`คุณแน่ใจว่าต้องการลบรถรหัส ${carId} ใช่หรือไม่?`)) {
+                    alert(`ลบรถรหัส ${carId} สำเร็จ`);
+                    // ในเว็บจริงควรส่งคำขอลบไปยังเซิร์ฟเวอร์
+                }
+            });
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        cancelBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Form Submission
+        document.getElementById('carForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('บันทึกข้อมูลรถเรียบร้อยแล้ว');
+            modal.style.display = 'none';
+            // ในเว็บจริงควรส่งข้อมูลฟอร์มไปยังเซิร์ฟเวอร์
+        });
+
+        // Filter Functionality
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            alert('ใช้ตัวกรองแล้ว');
+            // ในเว็บจริงควรมีการอัปเดตตารางตามตัวกรอง
+        });
+
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('searchFilter').value = '';
+            alert('รีเซ็ตตัวกรองแล้ว');
+            // ในเว็บจริงควรมีการรีเฟรชตาราง
+        });
+    </script>
+</body>
+</html>

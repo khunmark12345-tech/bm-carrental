@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Honda Civic - รายละเอียดรถ | BM Carrental Chiangrai</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset และ Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sukhumvit Set', 'Kanit', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        .logo span {
+            color: #ff6b00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #1a73e8;
+        }
+        
+        .auth-buttons {
+            display: flex;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid #1a73e8;
+            color: #1a73e8;
+            margin-right: 10px;
+        }
+        
+        .btn-register {
+            background-color: #1a73e8;
+            border: 1px solid #1a73e8;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .btn-register:hover {
+            background-color: #0d62d9;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: #f8f9fa;
+            padding: 15px 0;
+        }
+        
+        .breadcrumb ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin-right: 10px;
+        }
+        
+        .breadcrumb li:not(:last-child):after {
+            content: ">";
+            margin-left: 10px;
+        }
+        
+        .breadcrumb a:hover {
+            color: #1a73e8;
+        }
+        
+        /* Car Detail */
+        .car-detail {
+            padding: 40px 0;
+        }
+        
+        .car-detail-content {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .car-images {
+            flex: 1;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 400px;
+            background-color: #eee;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .thumbnail-images {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 60px;
+            background-color: #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .thumbnail:hover {
+            opacity: 0.7;
+        }
+        
+        .car-info {
+            flex: 1;
+        }
+        
+        .car-title {
+            margin-bottom: 20px;
+        }
+        
+        .car-title h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .car-badge {
+            display: inline-block;
+            background-color: #ff6b00;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .car-price {
+            font-size: 28px;
+            color: #1a73e8;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .car-price span {
+            font-size: 16px;
+            color: #666;
+            font-weight: normal;
+        }
+        
+        .car-description {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .car-features {
+            margin-bottom: 30px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-item i {
+            color: #1a73e8;
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .rental-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .rental-form h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn-rent {
+            width: 100%;
+            padding: 15px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-rent:hover {
+            background-color: #0d62d9;
+        }
+        
+        .price-summary {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .price-total {
+            font-weight: bold;
+            font-size: 18px;
+            color: #1a73e8;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #1a73e8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 15px 0;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .car-detail-content {
+                flex-direction: column;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">BM <span>Carrental Chiangrai</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าแรก</a></li>
+                    <li><a href="carrental.html">รถทั้งหมด</a></li>
+                    <li><a href="serve.html">บริการของเรา</a></li>
+                    <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                    <li><a href="contact.html">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-login">เข้าสู่ระบบ</a>
+                <a href="#" class="btn btn-register">สมัครสมาชิก</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="index.html">หน้าแรก</a></li>
+                <li><a href="carrental.html">รถทั้งหมด</a></li>
+                <li>Honda Civic</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Car Detail -->
+    <section class="car-detail">
+        <div class="container">
+            <div class="car-detail-content">
+                <div class="car-images">
+                    <div class="main-image">
+                        ภาพ Honda Civic 2023
+                    </div>
+                    <div class="thumbnail-images">
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                        <div class="thumbnail"></div>
+                    </div>
+                </div>
+                
+                <div class="car-info">
+                    <div class="car-title">
+                        <h1>Honda Civic</h1>
+                        <div class="car-price">฿1,600<span>/วัน</span></div>
+                    </div>
+                    
+                    <div class="car-description">
+                        Honda Civic รถยนต์นั่งขนาดกลางหรูหราที่โดดเด่นด้วยดีไซน์ที่ทันสมัยและประสิทธิภาพการขับขี่ที่ยอดเยี่ยม เหมาะสำหรับการเดินทางในเมืองและท่องเที่ยว
+                    </div>
+                    
+                    <div class="car-features">
+                        <h3>คุณสมบัติรถ</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>เชื้อเพลิง: น้ำมันเบนซิน</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-user-friends"></i>
+                                <span>จำนวนที่นั่ง: 5 ที่นั่ง</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-suitcase"></i>
+                                <span>กระเป๋า: 3 ใบ</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-cog"></i>
+                                <span>เกียร์: อัตโนมัติ</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-snowflake"></i>
+                                <span>เครื่องปรับอากาศ</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-music"></i>
+                                <span>ระบบเสียง</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rental-form">
+                        <h3>จองรถ</h3>
+                        <form id="rentalForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pickup-location">สถานที่รับรถ</label>
+                                    <select id="pickup-location" required>
+                                        <option value="">เลือกสาขา</option>
+                                        <option value="ratchada">สาขารัชดา</option>
+                                        <option value="silon">สาขาสีลม</option>
+                                        <option value="onnuch">สาขาอ่อนนุช</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="return-location">สถานที่คืนรถ</label>
+                                    <select id="return-location" required>
+                                        <option value="">เลือกสาขา</option>
+                                        <option value="ratchada">สาขารัชดา</option>
+                                        <option value="silon">สาขาสีลม</option>
+                                        <option value="onnuch">สาขาอ่อนนุช</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pickup-date">วันที่รับรถ</label>
+                                    <input type="date" id="pickup-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pickup-time">เวลารับรถ</label>
+                                    <input type="time" id="pickup-time" value="09:00" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="return-date">วันที่คืนรถ</label>
+                                    <input type="date" id="return-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="return-time">เวลาคืนรถ</label>
+                                    <input type="time" id="return-time" value="17:00" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="rental-days">จำนวนวัน</label>
+                                <input type="number" id="rental-days" min="1" value="1" required>
+                            </div>
+                            
+                            <div class="price-summary">
+                                <div class="price-item">
+                                    <span>ราคาต่อวัน:</span>
+                                    <span>฿1,600</span>
+                                </div>
+                                <div class="price-item">
+                                    <span>จำนวนวัน:</span>
+                                    <span id="days-display">1 วัน</span>
+                                </div>
+                                <div class="price-item">
+                                    <span>ค่าประกัน:</span>
+                                    <span>฿500</span>
+                                </div>
+                                <div class="price-item price-total">
+                                    <span>รวมทั้งสิ้น:</span>
+                                    <span id="total-price">฿2,100</span>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn-rent">จองรถตอนนี้</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>BM Carrental Chiangrai</h3>
+                    <p>บริการเช่ารถยนต์คุณภาพสูง พร้อมบริการที่รวดเร็วและราคาที่เป็นธรรม</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>ลิงก์ด่วน</h3>
+                    <ul>
+                        <li><a href="index.html">หน้าแรก</a></li>
+                        <li><a href="carrental.html">รถทั้งหมด</a></li>
+                        <li><a href="serve.html">บริการของเรา</a></li>
+                        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+                        <li><a href="contact.html">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ข้อมูลเพิ่มเติม</h3>
+                    <ul>
+                        <li><a href="#">คำถามที่พบบ่อย</a></li>
+                        <li><a href="#">ข้อกำหนดและเงื่อนไข</a></li>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#">วิธีการชำระเงิน</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ติดต่อเรา</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 02-123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@carrent.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 ถนนรัชดาภิเษก กรุงเทพฯ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BM Carrental Chiangrai. สงวนลิขสิทธิ์ทุกประการ.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ตั้งค่าวันเริ่มต้น
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const formattedDate = tomorrow.toISOString().split('T')[0];
+            document.getElementById('pickup-date').value = formattedDate;
+            
+            const returnDate = new Date(tomorrow);
+            returnDate.setDate(returnDate.getDate() + 1);
+            const formattedReturnDate = returnDate.toISOString().split('T')[0];
+            document.getElementById('return-date').value = formattedReturnDate;
+            
+            updatePrice();
+        });
+        
+        // อัปเดตราคาเมื่อเปลี่ยนจำนวนวัน
+        document.getElementById('rental-days').addEventListener('input', updatePrice);
+        
+        function updatePrice() {
+            const days = parseInt(document.getElementById('rental-days').value) || 1;
+            const dailyPrice = 1600;
+            const insurance = 500;
+            const total = (dailyPrice * days) + insurance;
+            
+            document.getElementById('days-display').textContent = days + ' วัน';
+            document.getElementById('total-price').textContent = '฿' + total.toLocaleString();
+        }
+        
+        // จัดการฟอร์ม
+        document.getElementById('rentalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const pickupDate = document.getElementById('pickup-date').value;
+            const returnDate = document.getElementById('return-date').value;
+            const pickupLocation = document.getElementById('pickup-location').value;
+            const returnLocation = document.getElementById('return-location').value;
+            
+            if (!pickupLocation || !returnLocation) {
+                alert('กรุณาเลือกสถานที่รับและคืนรถ');
+                return;
+            }
+            
+            if (new Date(pickupDate) >= new Date(returnDate)) {
+                alert('วันที่คืนรถต้องเป็นวันหลังจากวันที่รับรถ');
+                return;
+            }
+            
+            alert('ขอบคุณสำหรับการจอง! เราจะติดต่อกลับเพื่อยืนยันการจอง');
+        });
+    </script>
+</body>
+</html>
