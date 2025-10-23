@@ -278,71 +278,82 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add car card styles
         const carStyles = `
             .car-card {
-                background: white;
-                border-radius: 15px;
+                background: linear-gradient(160deg, rgba(15, 23, 42, 0.95), rgba(8, 13, 31, 0.92));
+                border-radius: 18px;
                 overflow: hidden;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-                transition: transform 0.3s;
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                box-shadow: 0 24px 55px rgba(3, 7, 18, 0.55);
+                transition: transform 0.35s ease, box-shadow 0.35s ease;
             }
-            
+
             .car-card:hover {
-                transform: translateY(-5px);
+                transform: translateY(-8px);
+                box-shadow: 0 32px 65px rgba(14, 165, 233, 0.25);
             }
-            
+
             .car-image img {
                 width: 100%;
                 height: 200px;
                 object-fit: cover;
+                filter: saturate(1.05) brightness(0.92);
             }
-            
+
             .car-info {
-                padding: 20px;
+                padding: 22px;
+                color: #a5b4d6;
             }
-            
+
             .car-info h3 {
                 font-size: 20px;
                 font-weight: 600;
-                margin-bottom: 10px;
-                color: #333;
+                margin-bottom: 12px;
+                color: #f8fafc;
+                letter-spacing: 0.3px;
             }
-            
+
             .car-price {
                 font-size: 24px;
                 font-weight: 700;
-                color: #0078FF;
-                margin-bottom: 15px;
+                color: #38bdf8;
+                margin-bottom: 18px;
+                text-shadow: 0 10px 25px rgba(56, 189, 248, 0.35);
             }
-            
+
             .car-features {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 8px;
-                margin-bottom: 20px;
+                gap: 10px;
+                margin-bottom: 22px;
             }
-            
+
             .feature-tag {
-                background: #f8f9fa;
-                color: #666;
-                padding: 4px 8px;
-                border-radius: 12px;
+                background: rgba(59, 130, 246, 0.15);
+                color: #e2e8f0;
+                padding: 5px 12px;
+                border-radius: 999px;
                 font-size: 12px;
+                border: 1px solid rgba(59, 130, 246, 0.35);
+                letter-spacing: 0.2px;
             }
-            
+
             .book-btn {
                 width: 100%;
-                background: #0078FF;
-                color: white;
-                border: none;
-                padding: 12px;
-                border-radius: 8px;
+                background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(56, 189, 248, 0.95));
+                color: #f8fafc;
+                border: 1px solid rgba(56, 189, 248, 0.45);
+                padding: 13px;
+                border-radius: 999px;
                 font-size: 16px;
                 font-weight: 600;
                 cursor: pointer;
-                transition: background 0.3s;
+                transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+                box-shadow: 0 18px 40px rgba(37, 99, 235, 0.35);
             }
-            
+
             .book-btn:hover {
-                background: #0056CC;
+                transform: translateY(-3px);
+                background: linear-gradient(135deg, rgba(56, 189, 248, 0.95), rgba(59, 130, 246, 1));
+                box-shadow: 0 24px 55px rgba(14, 165, 233, 0.35);
             }
         `;
         
